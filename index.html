@@ -177,8 +177,44 @@
   .foot-inner .mono{font-size:.7rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
   .disclaimer{font-size:.72rem;color:var(--dim);max-width:820px;margin-top:16px;line-height:1.7}
 
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--blue);color:#06121f;font-weight:700;padding:13px 30px;border-radius:8px;transition:transform .3s;z-index:200;font-size:.9rem;box-shadow:0 10px 40px rgba(126,200,248,.3)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--blue);color:#06121f;font-weight:700;padding:13px 30px;border-radius:8px;transition:transform .3s;z-index:300;font-size:.9rem;box-shadow:0 10px 40px rgba(126,200,248,.3)}
   .toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* ---------- Cart ---------- */
+  .cart-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--line2);border-radius:8px;background:rgba(126,200,248,.05);cursor:pointer;transition:.15s;color:var(--text);margin-left:14px}
+  .cart-btn:hover{border-color:var(--blue);color:var(--blue)}
+  .cart-btn svg{width:20px;height:20px}
+  .cart-count{position:absolute;top:-7px;right:-7px;min-width:19px;height:19px;border-radius:999px;background:var(--red);color:#fff;font-family:var(--mono);font-size:.62rem;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 5px;opacity:0;transform:scale(.5);transition:.2s}
+  .cart-count.on{opacity:1;transform:scale(1)}
+  .cart-overlay{position:fixed;inset:0;background:rgba(4,6,10,.6);backdrop-filter:blur(3px);z-index:210;opacity:0;pointer-events:none;transition:opacity .25s}
+  .cart-overlay.open{opacity:1;pointer-events:auto}
+  .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,100vw);background:var(--bg2);border-left:1px solid var(--line2);z-index:220;transform:translateX(105%);transition:transform .3s cubic-bezier(.3,.8,.3,1);display:flex;flex-direction:column}
+  .cart-drawer.open{transform:none;box-shadow:-30px 0 80px rgba(0,0,0,.6)}
+  .cart-head{display:flex;align-items:center;justify-content:space-between;padding:22px 26px;border-bottom:1px solid var(--line)}
+  .cart-head h3{font-family:var(--disp);font-weight:400;font-size:1.7rem;letter-spacing:.06em;text-transform:uppercase}
+  .cart-head h3 span{color:var(--blue)}
+  .cart-close{background:none;border:1px solid var(--line2);border-radius:6px;width:34px;height:34px;color:var(--muted);cursor:pointer;font-size:1rem;transition:.15s}
+  .cart-close:hover{color:var(--blue);border-color:var(--blue)}
+  .cart-items{flex:1;overflow-y:auto;padding:10px 26px}
+  .cart-empty{text-align:center;color:var(--dim);padding:70px 20px;font-family:var(--mono);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;line-height:2.2}
+  .citem{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
+  .citem-img{width:74px;height:56px;border-radius:8px;object-fit:cover;border:1px solid var(--line2);flex-shrink:0}
+  .citem-info{flex:1;min-width:0}
+  .citem-info .nm{font-family:var(--disp);font-size:1.1rem;letter-spacing:.05em;text-transform:uppercase;line-height:1.1}
+  .citem-info .pr{font-family:var(--mono);font-size:.72rem;color:var(--blue);margin-top:3px}
+  .qty{display:flex;align-items:center;gap:2px;border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+  .qty button{width:28px;height:30px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.95rem;transition:.15s}
+  .qty button:hover{color:var(--blue);background:rgba(126,200,248,.08)}
+  .qty .q{font-family:var(--mono);font-size:.8rem;min-width:26px;text-align:center}
+  .citem-rm{background:none;border:none;color:var(--dim);cursor:pointer;font-size:.85rem;margin-left:6px;transition:color .15s}
+  .citem-rm:hover{color:var(--red)}
+  .cart-foot{border-top:1px solid var(--line);padding:22px 26px 26px;background:var(--panel)}
+  .cart-sub{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .cart-sub .sk{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+  .cart-sub .sv{font-family:var(--disp);font-size:1.9rem;color:var(--blue);text-shadow:0 0 24px var(--glow)}
+  .cart-note{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-bottom:16px}
+  .checkout-btn{width:100%;justify-content:center;font-size:1rem;padding:15px}
+  .checkout-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
 </style>
 </head>
 <body>
@@ -188,6 +224,8 @@
   <g id="i-arrow"><path d="M3 14h20M15 6l8 8-8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
   <g id="i-mail"><rect x="3" y="6" width="22" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m4 8 10 8 10-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
   <g id="i-at"><circle cx="14" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 14v2a3 3 0 0 0 6 0v-2a11 11 0 1 0-4.5 8.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+  <g id="i-cart"><circle cx="10" cy="23" r="2" fill="currentColor" stroke="none"/><circle cx="20" cy="23" r="2" fill="currentColor" stroke="none"/><path d="M3 4h4l3 13h11l3-9H8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="i-lock"><rect x="6" y="12" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 12V9a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
 </defs></svg>
 
 <nav><div class="wrap nav-inner">
@@ -199,7 +237,10 @@
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="#lineup" class="btn">Shop bikes <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></a>
+  <div style="display:flex;align-items:center">
+    <a href="#lineup" class="btn">Shop bikes <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></a>
+    <button class="cart-btn" id="cart-open" aria-label="Open cart"><svg viewBox="0 0 28 28"><use href="#i-cart"/></svg><span class="cart-count" id="cart-count">0</span></button>
+  </div>
 </div></nav>
 
 <header>
@@ -241,7 +282,7 @@
       <div class="prow-top"><h3>Sur-Ron Ultra Bee</h3><span class="price">$25</span></div>
       <p>The all-terrain sting. Full swingarm detail, spinning wheels, factory-blue frame.</p>
       <div class="chips"><span class="chip">42 parts</span><span class="chip">Spinning wheels</span><span class="chip">Display stand</span></div>
-      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn" data-add="ultra-bee">Add to cart <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
     <div class="product rv d1"><span class="preorder">Pre-order</span><div class="photo">
@@ -251,7 +292,7 @@
       <div class="prow-top"><h3>Stark Varg</h3><span class="price">$30</span></div>
       <p>80hp of desk presence. Sculpted bodywork, motocross stance, arctic-white frame.</p>
       <div class="chips"><span class="chip">47 parts</span><span class="chip">MX stance</span><span class="chip">Display stand</span></div>
-      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn" data-add="stark-varg">Add to cart <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
     <div class="product rv d2"><span class="preorder">Pre-order</span><div class="photo">
@@ -261,7 +302,7 @@
       <div class="prow-top"><h3>E Ride Pro SS</h3><span class="price">$20</span></div>
       <p>Street-legal in miniature. Ember-red frame, detailed forks, turn-key stance.</p>
       <div class="chips"><span class="chip">38 parts</span><span class="chip">Turning bars</span><span class="chip">Display stand</span></div>
-      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn" data-add="e-ride-pro-ss">Add to cart <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
     <div class="product rv d3"><span class="preorder custom">Custom</span><div class="photo">
@@ -271,7 +312,7 @@
       <div class="prow-top"><h3>Your build, mini'd</h3><span class="price">$45</span></div>
       <p>Send photos of your bike — colorway, graphics, mods — and we print your exact machine.</p>
       <div class="chips"><span class="chip">Any e-moto</span><span class="chip">Your colorway</span><span class="chip">Made to order</span></div>
-      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Request <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn" data-add="custom-build">Add to cart <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
   </div>
@@ -350,7 +391,22 @@
   <p class="disclaimer">Mockup site — no real orders are processed. MOTOMODZ is an independent model shop and is not affiliated with, endorsed by, or sponsored by Sur-Ron, Stark Future, E Ride Pro, or any motorcycle manufacturer. Bike names identify the subject of each scale model. Photography: Unsplash contributors (Unsplash License); Stark VARG photo by Herodotptlomeu via Wikimedia Commons, CC BY-SA 4.0.</p>
 </div></footer>
 
-<div class="toast" id="toast">Pre-order noted (mockup)</div>
+<div class="toast" id="toast">Added to cart</div>
+
+<!-- ====== Cart drawer ====== -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
+  <div class="cart-head">
+    <h3>Cart <span id="cart-head-count"></span></h3>
+    <button class="cart-close" id="cart-close" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-foot">
+    <div class="cart-sub"><span class="sk">Subtotal</span><span class="sv" id="cart-subtotal">$0</span></div>
+    <div class="cart-note">Shipping calculated at checkout · Pre-orders ship from 07.05</div>
+    <button class="btn checkout-btn" id="checkout-btn"><svg viewBox="0 0 28 28"><use href="#i-lock"/></svg>Checkout</button>
+  </div>
+</aside>
 
 <script>
   const toast = document.getElementById('toast');
@@ -361,13 +417,126 @@
     clearTimeout(t);
     t = setTimeout(()=>toast.classList.remove('show'), 2200);
   }
-  document.querySelectorAll('.pre-btn').forEach(b=>b.addEventListener('click',()=>pop('Pre-order noted (mockup)')));
 
   // scroll reveal
   const io = new IntersectionObserver(es=>es.forEach(e=>{
     if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
   }),{threshold:.12});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  /* ================= CART =================
+     Product catalog. When Stripe is set up, add each product's
+     Stripe Price ID (price_xxx from the Stripe dashboard) below —
+     the checkout payload already sends { price, quantity } line items. */
+  const PRODUCTS = {
+    'ultra-bee':     { name:'Sur-Ron Ultra Bee', price:2500, img:'https://images.unsplash.com/photo-1692317799916-78daaa105636?q=80&w=300&auto=format&fit=crop', stripePriceId:null },
+    'stark-varg':    { name:'Stark Varg',        price:3000, img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Stark_Future_-_VARG.jpg/320px-Stark_Future_-_VARG.jpg', stripePriceId:null },
+    'e-ride-pro-ss': { name:'E Ride Pro SS',     price:2000, img:'https://images.unsplash.com/photo-1692317799896-9218c18cba8a?q=80&w=300&auto=format&fit=crop', stripePriceId:null },
+    'custom-build':  { name:"Your build, mini'd", price:4500, img:'https://images.unsplash.com/photo-1638743995296-cac26c72fa7a?q=80&w=300&auto=format&fit=crop', stripePriceId:null }
+  }; // prices in cents, Stripe-style
+
+  const fmt = c => '$' + (c/100).toFixed(c % 100 ? 2 : 0);
+  let cart = {};
+  try { cart = JSON.parse(localStorage.getItem('motomodz-cart')) || {}; } catch(e){ cart = {}; }
+
+  const drawer = document.getElementById('cart-drawer');
+  const overlay = document.getElementById('cart-overlay');
+  const itemsEl = document.getElementById('cart-items');
+  const countEl = document.getElementById('cart-count');
+  const headCountEl = document.getElementById('cart-head-count');
+  const subEl = document.getElementById('cart-subtotal');
+  const checkoutBtn = document.getElementById('checkout-btn');
+
+  function save(){ localStorage.setItem('motomodz-cart', JSON.stringify(cart)); }
+  function totalQty(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+  function subtotal(){ return Object.entries(cart).reduce((a,[id,q])=>a+PRODUCTS[id].price*q,0); }
+
+  function render(){
+    const n = totalQty();
+    countEl.textContent = n;
+    countEl.classList.toggle('on', n>0);
+    headCountEl.textContent = n ? '['+n+']' : '';
+    subEl.textContent = fmt(subtotal());
+    checkoutBtn.disabled = n===0;
+
+    if(n===0){
+      itemsEl.innerHTML = '<div class="cart-empty">Cart is empty<br>// pick your poison</div>';
+      return;
+    }
+    itemsEl.innerHTML = Object.entries(cart).map(([id,q])=>{
+      const p = PRODUCTS[id];
+      return `<div class="citem">
+        <img class="citem-img" src="${p.img}" alt="${p.name}">
+        <div class="citem-info">
+          <div class="nm">${p.name}</div>
+          <div class="pr">${fmt(p.price)} · 1:8 scale</div>
+        </div>
+        <div class="qty">
+          <button data-dec="${id}" aria-label="Decrease">−</button>
+          <span class="q">${q}</span>
+          <button data-inc="${id}" aria-label="Increase">+</button>
+        </div>
+        <button class="citem-rm" data-rm="${id}" aria-label="Remove">✕</button>
+      </div>`;
+    }).join('');
+  }
+
+  function openCart(){ drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeCart(){ drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; }
+
+  document.getElementById('cart-open').addEventListener('click', openCart);
+  document.getElementById('cart-close').addEventListener('click', closeCart);
+  overlay.addEventListener('click', closeCart);
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeCart(); });
+
+  document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{
+    const id = b.dataset.add;
+    cart[id] = (cart[id]||0)+1;
+    save(); render();
+    pop(PRODUCTS[id].name + ' added to cart');
+    countEl.classList.remove('on'); void countEl.offsetWidth; countEl.classList.add('on');
+  }));
+
+  itemsEl.addEventListener('click', e=>{
+    const inc = e.target.dataset.inc, dec = e.target.dataset.dec, rm = e.target.dataset.rm;
+    if(inc){ cart[inc]++; }
+    else if(dec){ cart[dec]--; if(cart[dec]<1) delete cart[dec]; }
+    else if(rm){ delete cart[rm]; }
+    else return;
+    save(); render();
+  });
+
+  /* ---------- Checkout (Stripe-ready) ----------
+     When Stripe is set up:
+     1. Add a tiny backend endpoint (Express on this same Railway service works):
+          POST /create-checkout-session
+          body: { items: [{ id, price (Stripe price ID), quantity }] }
+        It should call stripe.checkout.sessions.create({ line_items, mode:'payment',
+          success_url, cancel_url }) and respond { url: session.url }.
+     2. Fill in stripePriceId for each product in PRODUCTS above.
+     The fetch below already does the right thing — it just has nothing to talk to yet. */
+  checkoutBtn.addEventListener('click', async ()=>{
+    const items = Object.entries(cart).map(([id,q])=>({ id, price: PRODUCTS[id].stripePriceId, quantity: q }));
+    if(items.some(i=>!i.price)){
+      pop('Checkout coming soon — Stripe not connected yet');
+      return;
+    }
+    try{
+      checkoutBtn.disabled = true;
+      const r = await fetch('/create-checkout-session', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ items })
+      });
+      const data = await r.json();
+      if(data.url){ location.href = data.url; }
+      else throw new Error('no url');
+    }catch(err){
+      pop('Checkout unavailable — try again soon');
+      checkoutBtn.disabled = false;
+    }
+  });
+
+  render();
 </script>
 </body>
 </html>
