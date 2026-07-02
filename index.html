@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MotoMods — 3D-Printed Electric Bikes</title>
+<style>
+  :root{
+    --ink:#0e1116; --panel:#161b22; --panel2:#1d242e;
+    --volt:#c8ff1f; --volt-dim:#9fd400;
+    --text:#e8edf2; --muted:#8b97a5;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--ink);color:var(--text);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+  /* Nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(14,17,22,.85);backdrop-filter:blur(10px);border-bottom:1px solid #232b36}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:1.3rem;letter-spacing:-.5px}
+  .logo span{color:var(--volt)}
+  .nav-links{display:flex;gap:28px;font-size:.95rem;color:var(--muted)}
+  .nav-links a:hover{color:var(--volt)}
+  .cta-sm{background:var(--volt);color:#0e1116;font-weight:700;padding:8px 18px;border-radius:999px;font-size:.9rem}
+  .cta-sm:hover{background:var(--volt-dim)}
+
+  /* Hero */
+  header{padding:96px 0 72px;position:relative;overflow:hidden}
+  header::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(600px 300px at 80% 20%, rgba(200,255,31,.08), transparent),
+    repeating-linear-gradient(45deg, transparent 0 34px, rgba(200,255,31,.03) 34px 36px);pointer-events:none}
+  .badge{display:inline-block;border:1px solid var(--volt);color:var(--volt);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:22px}
+  h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;letter-spacing:-1.5px;line-height:1.08;max-width:700px}
+  h1 em{font-style:normal;color:var(--volt)}
+  .sub{color:var(--muted);font-size:1.15rem;max-width:560px;margin:22px 0 34px}
+  .cta{display:inline-block;background:var(--volt);color:#0e1116;font-weight:800;font-size:1.05rem;padding:14px 34px;border-radius:999px;margin-right:14px}
+  .cta:hover{background:var(--volt-dim)}
+  .cta.ghost{background:transparent;color:var(--text);border:1px solid #3a4553}
+  .cta.ghost:hover{border-color:var(--volt);color:var(--volt)}
+  .stats{display:flex;gap:48px;margin-top:56px;flex-wrap:wrap}
+  .stat b{display:block;font-size:1.8rem;color:var(--volt)}
+  .stat span{color:var(--muted);font-size:.9rem}
+
+  /* Sections */
+  section{padding:80px 0}
+  h2{font-size:2rem;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+  .kicker{color:var(--volt);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700}
+  .lead{color:var(--muted);max-width:600px;margin-bottom:44px}
+
+  /* Features */
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .card{background:var(--panel);border:1px solid #232b36;border-radius:var(--radius);padding:28px}
+  .card .icon{font-size:1.8rem;margin-bottom:14px}
+  .card h3{font-size:1.15rem;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.95rem}
+
+  /* Shop */
+  #shop{background:var(--panel);border-top:1px solid #232b36;border-bottom:1px solid #232b36}
+  .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+  .product{background:var(--panel2);border:1px solid #2a3441;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+  .product:hover{transform:translateY(-4px);border-color:var(--volt)}
+  .thumb{height:170px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:
+    radial-gradient(300px 120px at 50% 100%, rgba(200,255,31,.12), transparent), #141a22}
+  .pbody{padding:20px;display:flex;flex-direction:column;flex:1}
+  .ptag{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--volt);font-weight:700}
+  .pbody h3{margin:6px 0 6px;font-size:1.15rem}
+  .pbody p{color:var(--muted);font-size:.88rem;flex:1}
+  .prow{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+  .price{font-size:1.25rem;font-weight:800;color:var(--volt)}
+  .price small{color:var(--muted);font-weight:400;font-size:.75rem}
+  .buy{background:transparent;border:1px solid var(--volt);color:var(--volt);font-weight:700;padding:8px 16px;border-radius:999px;cursor:pointer;font-size:.85rem}
+  .buy:hover{background:var(--volt);color:#0e1116}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .about-art{background:var(--panel);border:1px solid #232b36;border-radius:var(--radius);padding:40px;text-align:center;font-size:5rem}
+  .about-art small{display:block;font-size:.85rem;color:var(--muted);margin-top:12px}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr}}
+
+  /* Contact */
+  #contact .card{max-width:560px}
+  label{display:block;font-size:.85rem;color:var(--muted);margin:16px 0 6px}
+  input,textarea{width:100%;background:#0e1116;border:1px solid #2a3441;border-radius:8px;padding:12px;color:var(--text);font:inherit}
+  input:focus,textarea:focus{outline:none;border-color:var(--volt)}
+  .send{margin-top:20px;width:100%;background:var(--volt);border:none;color:#0e1116;font-weight:800;font-size:1rem;padding:14px;border-radius:999px;cursor:pointer}
+  .send:hover{background:var(--volt-dim)}
+
+  footer{border-top:1px solid #232b36;padding:36px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--volt);color:#0e1116;font-weight:700;padding:12px 26px;border-radius:999px;transition:transform .3s;z-index:99}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav-inner">
+  <a href="#" class="logo">Moto<span>Mods</span></a>
+  <div class="nav-links">
+    <a href="#features">Why MotoMods</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#shop" class="cta-sm">Shop Bikes</a>
+</div></nav>
+
+<header><div class="wrap">
+  <span class="badge">3D-Printed &middot; Street-Ready &middot; Built to Order</span>
+  <h1>Electric bikes, <em>printed</em> for the way you ride.</h1>
+  <p class="sub">Every MotoMods frame is 3D-printed from recycled carbon-nylon composite, tuned to your weight, height, and riding style. No two bikes alike. All of them fast.</p>
+  <a href="#shop" class="cta">Browse the Lineup</a>
+  <a href="#features" class="cta ghost">How It Works</a>
+  <div class="stats">
+    <div class="stat"><b>72h</b><span>print-to-ship time</span></div>
+    <div class="stat"><b>40%</b><span>lighter than welded frames</span></div>
+    <div class="stat"><b>100mi</b><span>max range per charge</span></div>
+    <div class="stat"><b>0</b><span>identical bikes ever made</span></div>
+  </div>
+</div></header>
+
+<section id="features"><div class="wrap">
+  <span class="kicker">Why MotoMods</span>
+  <h2>Manufacturing is the feature.</h2>
+  <p class="lead">Traditional frames are welded to an average rider. Ours are printed to exactly one: you.</p>
+  <div class="grid3">
+    <div class="card"><div class="icon">🖨️</div><h3>Printed to Fit</h3><p>Send us your measurements and riding style. Our lattice-optimized frames are generated per-rider and printed in-house on industrial composite printers.</p></div>
+    <div class="card"><div class="icon">♻️</div><h3>Recycled Composite</h3><p>Frames use recycled carbon-nylon feedstock. Crash a frame? Send it back — we regrind and reprint at 40% off.</p></div>
+    <div class="card"><div class="icon">⚡</div><h3>Serious Power</h3><p>750W–2000W mid-drive motors, torque-sensing pedal assist, and swappable battery packs rated up to 100 miles.</p></div>
+    <div class="card"><div class="icon">🔧</div><h3>Mod Everything</h3><p>Every mount point is parametric. Racks, fenders, phone mounts, cargo pods — download the files or order printed parts.</p></div>
+    <div class="card"><div class="icon">🛰️</div><h3>Smart by Default</h3><p>GPS anti-theft, OTA firmware, and ride analytics in the companion app. Your bike gets better after you buy it.</p></div>
+    <div class="card"><div class="icon">🛡️</div><h3>5-Year Frame Warranty</h3><p>Each frame is CT-scanned before shipping. If it fails in normal riding, we print you a new one. Simple.</p></div>
+  </div>
+</div></section>
+
+<section id="shop"><div class="wrap">
+  <span class="kicker">The Lineup</span>
+  <h2>Pick your platform.</h2>
+  <p class="lead">All models are built to order and ship in about two weeks. Prices shown are mockup placeholders.</p>
+  <div class="products">
+    <div class="product"><div class="thumb">🚲</div><div class="pbody">
+      <span class="ptag">Commuter</span><h3>MM-1 Urban</h3>
+      <p>Lightweight city runner. 750W motor, 45mi range, integrated lights and rack mounts.</p>
+      <div class="prow"><span class="price">$2,199 <small>USD</small></span><button class="buy">Add to Cart</button></div>
+    </div></div>
+    <div class="product"><div class="thumb">🏍️</div><div class="pbody">
+      <span class="ptag">Performance</span><h3>MM-X Street</h3>
+      <p>The flagship. 1500W mid-drive, 70mi range, printed aero fairings, 28mph assist.</p>
+      <div class="prow"><span class="price">$3,899 <small>USD</small></span><button class="buy">Add to Cart</button></div>
+    </div></div>
+    <div class="product"><div class="thumb">⛰️</div><div class="pbody">
+      <span class="ptag">Off-Road</span><h3>MM-T Trail</h3>
+      <p>Full-suspension trail eater. 2000W peak, reinforced lattice frame, 4" tires.</p>
+      <div class="prow"><span class="price">$4,499 <small>USD</small></span><button class="buy">Add to Cart</button></div>
+    </div></div>
+    <div class="product"><div class="thumb">📦</div><div class="pbody">
+      <span class="ptag">Cargo</span><h3>MM-C Hauler</h3>
+      <p>Long-tail cargo platform, 400lb payload, dual battery bays, printed cargo pods included.</p>
+      <div class="prow"><span class="price">$3,299 <small>USD</small></span><button class="buy">Add to Cart</button></div>
+    </div></div>
+    <div class="product"><div class="thumb">🧩</div><div class="pbody">
+      <span class="ptag">Accessories</span><h3>Mod Kit Bundle</h3>
+      <p>Fenders, phone dock, tool caddy, and cargo pod — printed to match your frame color.</p>
+      <div class="prow"><span class="price">$249 <small>USD</small></span><button class="buy">Add to Cart</button></div>
+    </div></div>
+    <div class="product"><div class="thumb">🔋</div><div class="pbody">
+      <span class="ptag">Power</span><h3>Range+ Battery</h3>
+      <p>Swappable 960Wh pack. Adds up to 50 miles. Fits every MotoMods frame bay.</p>
+      <div class="prow"><span class="price">$599 <small>USD</small></span><button class="buy">Add to Cart</button></div>
+    </div></div>
+  </div>
+</div></section>
+
+<section id="about"><div class="wrap about-grid">
+  <div>
+    <span class="kicker">About</span>
+    <h2>One garage. One printer. One idea.</h2>
+    <p class="lead" style="margin-bottom:16px">MotoMods started when our founder crashed his commuter ebike and got quoted 12 weeks for a replacement frame. He printed his own in a weekend — and it rode better.</p>
+    <p style="color:var(--muted)">Today we run a small print farm and ship custom frames across the country. We're not trying to be the biggest bike company. We're trying to be the one that fits you.</p>
+  </div>
+  <div class="about-art">🖨️➡️🚲<small>From print bed to pavement in 72 hours</small></div>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <span class="kicker">Contact</span>
+  <h2>Get a custom quote.</h2>
+  <p class="lead">Tell us how you ride. We'll spec a build.</p>
+  <div class="card">
+    <form id="quote-form">
+      <label for="name">Name</label><input id="name" type="text" placeholder="Jane Rider">
+      <label for="email">Email</label><input id="email" type="email" placeholder="you@example.com">
+      <label for="msg">What are you looking for?</label><textarea id="msg" rows="4" placeholder="Daily 15mi commute, some hills, need a rack..."></textarea>
+      <button class="send" type="submit">Request Quote</button>
+    </form>
+  </div>
+</div></section>
+
+<footer><div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">
+  <span>© 2026 MotoMods — 3D-Printed Electric Bikes. Mockup site; no real orders are processed.</span>
+  <span>hello@motomods.example</span>
+</div></footer>
+
+<div class="toast" id="toast">Added to cart (mockup)</div>
+
+<script>
+  const toast = document.getElementById('toast');
+  let t;
+  function pop(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(t);
+    t = setTimeout(()=>toast.classList.remove('show'), 2200);
+  }
+  document.querySelectorAll('.buy').forEach(b=>b.addEventListener('click',()=>pop('Added to cart (mockup)')));
+  document.getElementById('quote-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    pop('Quote request sent (mockup)');
+    e.target.reset();
+  });
+</script>
+</body>
+</html>
