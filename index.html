@@ -9,222 +9,217 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#080b12; --bg2:#0b0f18; --panel:#0e1420; --panel2:#121a29;
-    --line:#1c2536; --line2:#26324a;
-    --blue:#7ec8f8; --blue-dk:#4aa8e8; --blue-glow:rgba(126,200,248,.35);
-    --red:#e8452e; --ember:#c2401c;
-    --text:#e9eef5; --muted:#8b98ab; --dim:#5c6880;
+    --bg:#070a10; --bg2:#0a0e16; --panel:#0d1320; --panel2:#111827;
+    --line:#1a2334; --line2:#273349;
+    --blue:#7ec8f8; --blue-dk:#4aa8e8; --glow:rgba(126,200,248,.35);
+    --red:#e8452e;
+    --text:#eaeff6; --muted:#8b98ab; --dim:#5c6880;
     --disp:'Bebas Neue',sans-serif;
     --mono:'IBM Plex Mono',monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{
-    font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;
-    background-image:
-      radial-gradient(900px 500px at 85% -5%, rgba(74,168,232,.10), transparent 60%),
-      radial-gradient(800px 500px at 0% 110%, rgba(194,64,28,.14), transparent 60%),
-      linear-gradient(rgba(126,200,248,.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(126,200,248,.035) 1px, transparent 1px);
-    background-size:auto,auto,52px 52px,52px 52px;
-  }
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
   svg{display:block}
   ::selection{background:var(--blue);color:var(--bg)}
-
-  .disp{font-family:var(--disp);letter-spacing:.02em}
   .mono{font-family:var(--mono)}
 
+  /* reveal on scroll */
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  .rv.in{opacity:1;transform:none}
+  .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
   /* ---------- Nav ---------- */
-  nav{position:sticky;top:0;z-index:50;background:rgba(8,11,18,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,10,16,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(38,50,73,.5)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
   .logo{display:flex;align-items:center;gap:12px}
-  .logo .mark{width:36px;height:36px}
-  .logo span{font-family:var(--disp);font-size:1.5rem;letter-spacing:.12em}
+  .logo .mark{width:34px;height:34px;filter:drop-shadow(0 0 10px rgba(126,200,248,.4))}
+  .logo span{font-family:var(--disp);font-size:1.5rem;letter-spacing:.14em}
   .logo span b{color:var(--blue);font-weight:400}
-  .nav-links{display:flex;gap:30px;font-size:.92rem;color:var(--muted);font-weight:500}
-  .nav-links a{transition:color .15s}
+  .nav-links{display:flex;gap:32px;font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .nav-links a{transition:color .15s;position:relative}
   .nav-links a:hover{color:var(--blue)}
-  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--blue);color:#06121f;font-weight:700;padding:11px 24px;border-radius:8px;border:none;cursor:pointer;font-size:.95rem;transition:.15s;font-family:'Inter',sans-serif}
-  .btn:hover{background:#a5d9ff;box-shadow:0 0 24px var(--blue-glow);transform:translateY(-1px)}
-  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line2)}
-  .btn.ghost:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 18px rgba(126,200,248,.15)}
+  @media(max-width:820px){.nav-links{display:none}}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--blue);color:#06121f;font-weight:700;padding:12px 26px;border-radius:6px;border:none;cursor:pointer;font-size:.93rem;transition:.18s;font-family:'Inter',sans-serif}
+  .btn:hover{background:#b3e0ff;box-shadow:0 0 30px var(--glow);transform:translateY(-2px)}
+  .btn.ghost{background:rgba(126,200,248,.06);color:var(--text);border:1px solid var(--line2)}
+  .btn.ghost:hover{border-color:var(--blue);color:var(--blue);background:rgba(126,200,248,.1)}
   .btn svg{width:16px;height:16px}
 
   /* ---------- Hero ---------- */
-  header{padding:88px 0 64px;overflow:hidden}
-  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
-  @media(max-width:900px){.hero{grid-template-columns:1fr}}
-  .badge{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line2);border-radius:999px;padding:7px 16px;font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;color:var(--blue);text-transform:uppercase;margin-bottom:26px;background:rgba(126,200,248,.05)}
-  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue);animation:pulse 2s infinite}
-  @keyframes pulse{50%{opacity:.4}}
-  h1{font-family:var(--disp);font-weight:400;font-size:clamp(4rem,9vw,6.8rem);line-height:.92;letter-spacing:.015em;text-transform:uppercase}
-  h1 .outline{color:transparent;-webkit-text-stroke:2px var(--line2)}
-  h1 .blue{color:var(--blue);text-shadow:0 0 40px var(--blue-glow)}
-  .sub{color:var(--muted);font-size:1.08rem;max-width:520px;margin:26px 0 34px}
-  .sub b{color:var(--text);font-weight:600}
+  header{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:140px 0 0}
+  .hero-bg{position:absolute;inset:0;z-index:-2}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(180deg, rgba(7,10,16,.72) 0%, rgba(7,10,16,.35) 40%, rgba(7,10,16,.92) 82%, var(--bg) 100%),
+    linear-gradient(90deg, rgba(7,10,16,.65) 0%, transparent 55%)}
+  .hero-inner{width:100%;padding-bottom:84px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(126,200,248,.35);border-radius:999px;padding:8px 18px;font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;color:var(--blue);text-transform:uppercase;margin-bottom:28px;background:rgba(7,10,16,.55);backdrop-filter:blur(6px)}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  h1{font-family:var(--disp);font-weight:400;font-size:clamp(4.6rem,11vw,9rem);line-height:.88;letter-spacing:.01em;text-transform:uppercase;text-shadow:0 8px 40px rgba(0,0,0,.6)}
+  h1 .outline{color:transparent;-webkit-text-stroke:2.5px rgba(126,200,248,.55)}
+  h1 .blue{color:var(--blue);text-shadow:0 0 60px var(--glow)}
+  .sub{color:#c3cddb;font-size:clamp(1rem,1.6vw,1.18rem);max-width:560px;margin:28px 0 36px;text-shadow:0 2px 16px rgba(0,0,0,.8)}
+  .sub b{color:#fff;font-weight:600}
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-  .hero-stats{display:flex;gap:0;margin-top:52px;border-top:1px solid var(--line);max-width:520px}
-  .hstat{flex:1;padding:18px 18px 0 0}
-  .hstat+.hstat{padding-left:18px;border-left:1px solid var(--line)}
-  .hstat .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
-  .hstat .v{font-family:var(--disp);font-size:2rem;color:var(--blue);line-height:1.1;margin-top:2px}
-
-  /* Blueprint stage */
-  .blueprint{position:relative;border:1px dashed var(--line2);border-radius:12px;padding:44px 34px 30px;background:linear-gradient(180deg, rgba(18,26,41,.6), rgba(11,15,24,.9))}
-  .blueprint::before,.blueprint::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--blue);opacity:.6}
-  .blueprint::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
-  .blueprint::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
-  .bp-tag{position:absolute;top:14px;left:18px;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
-  .bp-tag b{color:var(--blue);font-weight:600}
-  .bp-dim{display:flex;align-items:center;gap:10px;margin-top:22px;font-family:var(--mono);font-size:.7rem;color:var(--dim);letter-spacing:.12em}
-  .bp-dim .rule{flex:1;height:1px;background:var(--line2);position:relative}
-  .bp-dim .rule::before,.bp-dim .rule::after{content:"";position:absolute;top:-4px;width:1px;height:9px;background:var(--line2)}
-  .bp-dim .rule::before{left:0}.bp-dim .rule::after{right:0}
+  .hero-stats{display:flex;margin-top:60px;border-top:1px solid rgba(126,200,248,.22);max-width:600px;backdrop-filter:blur(4px)}
+  .hstat{flex:1;padding:20px 20px 0 0}
+  .hstat+.hstat{padding-left:22px;border-left:1px solid rgba(126,200,248,.22)}
+  .hstat .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:#9fb0c5;text-transform:uppercase}
+  .hstat .v{font-family:var(--disp);font-size:2.4rem;color:var(--blue);line-height:1.05;margin-top:4px;text-shadow:0 0 30px var(--glow)}
+  .scroll-cue{position:absolute;right:40px;bottom:36px;font-family:var(--mono);font-size:.66rem;letter-spacing:.3em;color:var(--dim);text-transform:uppercase;writing-mode:vertical-rl;display:flex;align-items:center;gap:12px}
+  .scroll-cue::after{content:"";width:1px;height:56px;background:linear-gradient(var(--blue),transparent);animation:drip 2s infinite}
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+  @media(max-width:820px){.scroll-cue{display:none}}
 
   /* ---------- Ticker ---------- */
-  .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:13px 0;white-space:nowrap}
-  .ticker-track{display:inline-block;animation:scroll 28s linear infinite}
-  .ticker span{font-family:var(--mono);font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 34px}
+  .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:14px 0;white-space:nowrap;position:relative;z-index:2}
+  .ticker-track{display:inline-block;animation:scroll 30s linear infinite}
+  .ticker span{font-family:var(--mono);font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:0 36px}
   .ticker span b{color:var(--blue);font-weight:400}
   @keyframes scroll{to{transform:translateX(-50%)}}
 
   /* ---------- Sections ---------- */
-  section{padding:88px 0}
-  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+  section{padding:110px 0}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:var(--blue)}
   .kicker::before{content:"/ "}
-  h2{font-family:var(--disp);font-weight:400;font-size:clamp(2.6rem,5.5vw,4rem);line-height:.95;text-transform:uppercase;margin:12px 0 14px;letter-spacing:.02em}
-  .lead{color:var(--muted);max-width:600px;margin-bottom:48px}
+  h2{font-family:var(--disp);font-weight:400;font-size:clamp(3rem,6.5vw,5rem);line-height:.92;text-transform:uppercase;margin:14px 0 16px;letter-spacing:.015em}
+  h2 .outline{color:transparent;-webkit-text-stroke:2px var(--line2)}
+  .lead{color:var(--muted);max-width:620px;margin-bottom:56px;font-size:1.04rem}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .sec-head .mono-note{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;padding-bottom:26px}
 
   /* ---------- Lineup ---------- */
-  .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
-  .product{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s,box-shadow .2s}
-  .product:hover{transform:translateY(-6px);border-color:var(--line2);box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 0 1px rgba(126,200,248,.12)}
-  .preorder{position:absolute;top:16px;left:16px;z-index:2;background:var(--red);color:#fff;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.16em;padding:5px 11px;border-radius:4px;text-transform:uppercase}
-  .thumb{padding:44px 26px 6px;display:flex;align-items:flex-end;justify-content:center;min-height:210px;background:
-    radial-gradient(240px 110px at 50% 108%, rgba(126,200,248,.13), transparent),
-    repeating-linear-gradient(0deg, transparent 0 25px, rgba(126,200,248,.03) 25px 26px)}
-  .thumb svg{width:84%;max-width:250px;height:auto;filter:drop-shadow(0 14px 22px rgba(0,0,0,.55))}
-  .product:hover .thumb svg{filter:drop-shadow(0 14px 22px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(126,200,248,.18))}
-  .pbody{padding:20px 24px 24px;display:flex;flex-direction:column;flex:1;border-top:1px solid var(--line)}
-  .prow-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-  .pbody h3{font-family:var(--disp);font-weight:400;font-size:1.65rem;letter-spacing:.04em;text-transform:uppercase}
-  .price{font-family:var(--disp);font-size:1.65rem;color:var(--blue)}
-  .pbody p{color:var(--muted);font-size:.92rem;margin-top:6px;flex:1}
-  .pfoot{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
-  .scale{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
-  .pre-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.16em;color:var(--text);text-transform:uppercase;transition:color .15s}
+  #lineup{background:
+    radial-gradient(800px 400px at 100% 0%, rgba(74,168,232,.06), transparent 60%)}
+  .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px}
+  .product{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s,box-shadow .25s}
+  .product:hover{transform:translateY(-8px);border-color:rgba(126,200,248,.4);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 40px rgba(126,200,248,.08)}
+  .preorder{position:absolute;top:18px;left:18px;z-index:3;background:var(--red);color:#fff;font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.18em;padding:6px 12px;border-radius:4px;text-transform:uppercase;box-shadow:0 4px 16px rgba(232,69,46,.4)}
+  .preorder.custom{background:var(--blue);color:#06121f;box-shadow:0 4px 16px rgba(126,200,248,.35)}
+  .photo{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;filter:saturate(.92)}
+  .product:hover .photo img{transform:scale(1.07)}
+  .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(13,19,32,.12) 0%, transparent 40%, rgba(13,19,32,.88) 100%)}
+  .photo .ref{position:absolute;bottom:12px;left:18px;z-index:2;font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:rgba(234,239,246,.68);text-transform:uppercase}
+  .pbody{padding:22px 26px 26px;display:flex;flex-direction:column;flex:1}
+  .prow-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+  .pbody h3{font-family:var(--disp);font-weight:400;font-size:1.9rem;letter-spacing:.045em;text-transform:uppercase}
+  .price{font-family:var(--disp);font-size:1.9rem;color:var(--blue);text-shadow:0 0 24px var(--glow)}
+  .pbody p{color:var(--muted);font-size:.93rem;margin-top:7px;flex:1}
+  .chips{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .chip{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line2);border-radius:4px;padding:4px 10px}
+  .pfoot{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+  .scale{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
+  .pre-btn{display:inline-flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.18em;color:var(--text);text-transform:uppercase;transition:color .15s}
   .pre-btn:hover{color:var(--blue)}
   .pre-btn svg{width:14px;height:14px;transition:transform .15s}
-  .pre-btn:hover svg{transform:translateX(4px)}
+  .pre-btn:hover svg{transform:translateX(5px)}
 
-  /* ---------- Specs ---------- */
-  #specs{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .spec{background:var(--panel);padding:30px}
-  .spec .num{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--dim)}
-  .spec .icon{width:44px;height:44px;margin:16px 0 14px;color:var(--blue)}
-  .spec .icon svg{width:100%;height:100%}
-  .spec h3{font-family:var(--disp);font-weight:400;font-size:1.4rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
-  .spec p{color:var(--muted);font-size:.9rem}
+  /* ---------- Craft (split) ---------- */
+  #craft{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .craft-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+  @media(max-width:900px){.craft-grid{grid-template-columns:1fr}}
+  .craft-photo{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line2)}
+  .craft-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:saturate(.9)}
+  .craft-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(7,10,16,.8));pointer-events:none}
+  .craft-photo .tag{position:absolute;bottom:18px;left:22px;z-index:2;font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;color:var(--blue);text-transform:uppercase}
+  .spec-rows{margin-top:34px;border-top:1px solid var(--line)}
+  .srow{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 0;border-bottom:1px solid var(--line)}
+  .srow .sk{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+  .srow .sv{font-weight:600;font-size:.95rem;text-align:right}
+  .srow .sv em{font-style:normal;color:var(--blue)}
+
+  /* ---------- Process ---------- */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .step{background:var(--panel);padding:34px 30px;position:relative;transition:background .2s}
+  .step:hover{background:var(--panel2)}
+  .step .num{font-family:var(--disp);font-size:3.4rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--line2);transition:.2s}
+  .step:hover .num{color:var(--blue);-webkit-text-stroke:0;text-shadow:0 0 30px var(--glow)}
+  .step h3{font-family:var(--disp);font-weight:400;font-size:1.5rem;letter-spacing:.05em;text-transform:uppercase;margin:18px 0 8px}
+  .step p{color:var(--muted);font-size:.9rem}
+
+  /* ---------- Gallery ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:760px){.gallery{grid-template-columns:1fr}}
+  .gshot{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3}
+  .gshot img{width:100%;height:100%;object-fit:cover;transition:transform .6s;filter:saturate(.9)}
+  .gshot:hover img{transform:scale(1.06)}
+  .gshot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(7,10,16,.75))}
+  .gshot .cap{position:absolute;bottom:12px;left:16px;z-index:2;font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:rgba(234,239,246,.75);text-transform:uppercase}
 
   /* ---------- About ---------- */
-  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:start}
   @media(max-width:820px){.about-grid{grid-template-columns:1fr}}
-  .about-copy p{color:var(--muted);margin-bottom:18px;font-size:1.02rem}
+  .about-copy p{color:var(--muted);margin-bottom:20px;font-size:1.05rem}
   .about-copy p b{color:var(--text)}
-  .creds{display:flex;gap:0;margin-top:30px;border-top:1px solid var(--line)}
-  .creds .hstat .v{color:var(--text)}
+  .creds{display:flex;margin-top:34px;border-top:1px solid var(--line)}
+  .creds .hstat .v{color:var(--text);text-shadow:none;font-size:2rem}
+  .creds .hstat .k{color:var(--dim)}
+  .creds .hstat+.hstat{border-color:var(--line)}
 
   /* ---------- CTA ---------- */
-  #contact{text-align:center;position:relative}
-  #contact h2{font-size:clamp(3.2rem,7vw,5.2rem)}
-  #contact h2 .blue{color:var(--blue);text-shadow:0 0 46px var(--blue-glow)}
-  #contact .lead{margin:0 auto 40px}
+  #contact{position:relative;text-align:center;padding:130px 0;overflow:hidden}
+  #contact::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(700px 340px at 50% 110%, rgba(74,168,232,.14), transparent 65%);pointer-events:none}
+  #contact h2{font-size:clamp(3.6rem,8vw,6rem)}
+  #contact .blue{color:var(--blue);text-shadow:0 0 56px var(--glow)}
+  #contact .lead{margin:0 auto 44px}
   .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
   /* ---------- Footer ---------- */
-  footer{border-top:1px solid var(--line);padding:34px 0;background:var(--bg2)}
+  footer{border-top:1px solid var(--line);padding:36px 0;background:var(--bg2)}
   .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
-  .foot-inner .mono{font-size:.72rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
-  .disclaimer{font-size:.72rem;color:var(--dim);max-width:760px;margin-top:16px;line-height:1.7}
+  .foot-inner .mono{font-size:.7rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+  .disclaimer{font-size:.72rem;color:var(--dim);max-width:820px;margin-top:16px;line-height:1.7}
 
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--blue);color:#06121f;font-weight:700;padding:13px 30px;border-radius:8px;transition:transform .3s;z-index:99;font-size:.9rem}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--blue);color:#06121f;font-weight:700;padding:13px 30px;border-radius:8px;transition:transform .3s;z-index:200;font-size:.9rem;box-shadow:0 10px 40px rgba(126,200,248,.3)}
   .toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ====== SVG DEFS ====== -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <g id="bolt-mark">
-      <rect x="2" y="2" width="60" height="60" rx="12" fill="#7ec8f8"/>
-      <path d="M36 8 L18 36 h11 L27 56 L46 27 H34 Z" fill="#080b12"/>
-    </g>
-    <!-- Mini e-moto silhouette. Recolor per-instance with CSS custom properties. -->
-    <g id="mini-bike">
-      <rect x="40" y="128" width="150" height="8" rx="4" fill="var(--stand,#1c2536)"/>
-      <rect x="105" y="112" width="20" height="18" rx="3" fill="var(--stand,#1c2536)"/>
-      <circle cx="62" cy="98" r="26" fill="none" stroke="var(--tire,#e9eef5)" stroke-width="9"/>
-      <circle cx="168" cy="98" r="26" fill="none" stroke="var(--tire,#e9eef5)" stroke-width="9"/>
-      <circle cx="62" cy="98" r="9" fill="var(--hub,#5c6880)"/>
-      <circle cx="168" cy="98" r="9" fill="var(--hub,#5c6880)"/>
-      <path d="M62 98 L104 92 L96 64 L138 58 L150 74 L168 98" fill="none" stroke="var(--frame,#7ec8f8)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M104 92 L134 92 L150 74" fill="none" stroke="var(--frame,#7ec8f8)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="100" y="62" width="42" height="26" rx="6" fill="var(--body,#e9eef5)"/>
-      <path d="M92 58 L136 52 L138 44 L96 48 Z" fill="var(--seat,#e9eef5)"/>
-      <path d="M150 74 L162 50 M162 50 L152 44 M162 50 L172 46" fill="none" stroke="var(--frame,#7ec8f8)" stroke-width="7" stroke-linecap="round"/>
-      <path d="M150 66 Q170 58 184 74" fill="none" stroke="var(--seat,#e9eef5)" stroke-width="7" stroke-linecap="round"/>
-    </g>
-    <g id="i-arrow"><path d="M3 14h20M15 6l8 8-8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
-    <g id="i-printer">
-      <path d="M7 3h14v6H7zM5 9h18a2 2 0 0 1 2 2v7h-4M5 9a2 2 0 0 0-2 2v7h4m0-4h14v9H7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M11 21h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    </g>
-    <g id="i-layers"><path d="M14 3 25 9 14 15 3 9zM3 14l11 6 11-6M3 19l11 6 11-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
-    <g id="i-hand"><path d="M8 14V6.5a1.8 1.8 0 0 1 3.6 0V13m0-8a1.8 1.8 0 0 1 3.6 0v8m0-6.5a1.8 1.8 0 0 1 3.6 0V15m0-4a1.8 1.8 0 0 1 3.6 0v6c0 5-3.4 8-8 8-3.6 0-5.5-1.6-7.2-4.6L4.6 16c-.9-1.5.6-3.2 2.2-2.5L8 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
-    <g id="i-box"><path d="M4 9 14 4l10 5v10l-10 5L4 19zM4 9l10 5 10-5M14 14v10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
-    <g id="i-mail"><rect x="3" y="6" width="22" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m4 8 10 8 10-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
-    <g id="i-at"><circle cx="14" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 14v2a3 3 0 0 0 6 0v-2a11 11 0 1 0-4.5 8.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
-  </defs>
-</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="bolt-mark"><rect x="2" y="2" width="60" height="60" rx="12" fill="#7ec8f8"/><path d="M36 8 L18 36 h11 L27 56 L46 27 H34 Z" fill="#070a10"/></g>
+  <g id="i-arrow"><path d="M3 14h20M15 6l8 8-8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="i-mail"><rect x="3" y="6" width="22" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m4 8 10 8 10-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="i-at"><circle cx="14" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 14v2a3 3 0 0 0 6 0v-2a11 11 0 1 0-4.5 8.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+</defs></svg>
 
 <nav><div class="wrap nav-inner">
   <a href="#" class="logo"><svg class="mark" viewBox="0 0 64 64"><use href="#bolt-mark"/></svg><span>MOTO<b>MODZ</b></span></a>
   <div class="nav-links">
     <a href="#lineup">Lineup</a>
-    <a href="#specs">Specs</a>
+    <a href="#craft">Craft</a>
+    <a href="#process">Process</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </div>
   <a href="#lineup" class="btn">Shop bikes <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></a>
 </div></nav>
 
-<header><div class="wrap">
-  <div class="hero">
-    <div>
-      <span class="badge"><span class="dot"></span>All releasing July 5th</span>
-      <h1>Mini bikes.<br><span class="outline">Full</span> <span class="blue">throttle.</span></h1>
-      <p class="sub">MOTOMODZ builds obsessively detailed <b>3D printed replicas</b> of the electric dirtbikes you actually shred — Ultra Bee, Stark Varg, E Ride Pro and more. <b>Desk-sized. Not full size. All attitude.</b></p>
-      <div class="hero-ctas">
-        <a href="#lineup" class="btn">See the lineup <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></a>
-        <a href="#specs" class="btn ghost">How they're made</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hstat"><div class="k">Scale</div><div class="v disp">1:8</div></div>
-        <div class="hstat"><div class="k">Parts</div><div class="v disp">40+</div></div>
-        <div class="hstat"><div class="k">Hand-finish</div><div class="v disp">100%</div></div>
-      </div>
+<header>
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1692317800115-b9c3fe575466?q=80&w=1900&auto=format&fit=crop" alt="Electric dirtbike ripping through a forest" fetchpriority="high"></div>
+  <div class="wrap hero-inner">
+    <span class="badge"><span class="dot"></span>All releasing July 5th — limited first run</span>
+    <h1>Mini bikes.<br><span class="outline">Full</span> <span class="blue">throttle.</span></h1>
+    <p class="sub">MOTOMODZ builds obsessively detailed <b>3D printed replicas</b> of the electric dirtbikes you actually shred — Ultra Bee, Stark Varg, E Ride Pro and more. <b>Desk-sized. Not full size. All attitude.</b></p>
+    <div class="hero-ctas">
+      <a href="#lineup" class="btn">See the lineup <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></a>
+      <a href="#process" class="btn ghost">How they're made</a>
     </div>
-    <div class="blueprint">
-      <div class="bp-tag">FIG.01 — <b>ULTRA BEE / 1:8</b></div>
-      <svg viewBox="0 0 230 145" style="--frame:#7ec8f8;--seat:#e9eef5;--body:#e9eef5;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
-      <div class="bp-dim"><span>0mm</span><span class="rule"></span><span>238mm</span></div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="k">Scale</div><div class="v">1:8</div></div>
+      <div class="hstat"><div class="k">Parts</div><div class="v">40+</div></div>
+      <div class="hstat"><div class="k">Hand-finish</div><div class="v">100%</div></div>
     </div>
   </div>
-</div></header>
+  <div class="scroll-cue">Scroll</div>
+</header>
 
 <div class="ticker"><div class="ticker-track">
   <span>1:8 scale <b>//</b></span><span>40+ printed parts <b>//</b></span><span>Hand-finished <b>//</b></span><span>Resin + FDM <b>//</b></span><span>Foam-lined box <b>//</b></span><span>Designed in-house <b>//</b></span><span>Releasing 07.05 <b>//</b></span>
@@ -232,79 +227,116 @@
 </div></div>
 
 <section id="lineup"><div class="wrap">
-  <span class="kicker">Lineup</span>
-  <h2>Pick your poison.</h2>
-  <p class="lead">Every model printed to order, hand-finished, and shipped in a foam-lined display box. First come, first served.</p>
+  <div class="sec-head">
+    <div class="rv"><span class="kicker">Lineup</span><h2>Pick your <span class="outline">poison.</span></h2></div>
+    <span class="mono-note rv d1">[ 04 models — first run of 100 ]</span>
+  </div>
+  <p class="lead rv">Every model printed to order, hand-finished, and shipped in a foam-lined display box. First come, first served.</p>
   <div class="products">
 
-    <div class="product"><span class="preorder">Pre-order</span><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#7ec8f8;--seat:#e9eef5;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
+    <div class="product rv"><span class="preorder">Pre-order</span><div class="photo">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1692317799916-78daaa105636?q=80&w=1000&auto=format&fit=crop" alt="Sur-Ron electric dirtbike in the forest">
+      <span class="ref">Ref — full-size machine</span>
     </div><div class="pbody">
       <div class="prow-top"><h3>Sur-Ron Ultra Bee</h3><span class="price">$25</span></div>
       <p>The all-terrain sting. Full swingarm detail, spinning wheels, factory-blue frame.</p>
+      <div class="chips"><span class="chip">42 parts</span><span class="chip">Spinning wheels</span><span class="chip">Display stand</span></div>
       <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
-    <div class="product"><span class="preorder">Pre-order</span><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#e9eef5;--seat:#7ec8f8;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
+    <div class="product rv d1"><span class="preorder">Pre-order</span><div class="photo">
+      <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Stark_Future_-_VARG.jpg/1280px-Stark_Future_-_VARG.jpg" alt="Stark Varg electric motocross bike">
+      <span class="ref">Ref — full-size machine</span>
     </div><div class="pbody">
       <div class="prow-top"><h3>Stark Varg</h3><span class="price">$30</span></div>
       <p>80hp of desk presence. Sculpted bodywork, motocross stance, arctic-white frame.</p>
+      <div class="chips"><span class="chip">47 parts</span><span class="chip">MX stance</span><span class="chip">Display stand</span></div>
       <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
-    <div class="product"><span class="preorder">Pre-order</span><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#e8452e;--seat:#e9eef5;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
+    <div class="product rv d2"><span class="preorder">Pre-order</span><div class="photo">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1692317799896-9218c18cba8a?q=80&w=1000&auto=format&fit=crop" alt="Electric bike on a dirt road">
+      <span class="ref">Ref — full-size machine</span>
     </div><div class="pbody">
       <div class="prow-top"><h3>E Ride Pro SS</h3><span class="price">$20</span></div>
       <p>Street-legal in miniature. Ember-red frame, detailed forks, turn-key stance.</p>
+      <div class="chips"><span class="chip">38 parts</span><span class="chip">Turning bars</span><span class="chip">Display stand</span></div>
       <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
-    <div class="product"><span class="preorder" style="background:var(--blue);color:#06121f">Custom</span><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#f2a71b;--seat:#7ec8f8;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
+    <div class="product rv d3"><span class="preorder custom">Custom</span><div class="photo">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1638743995296-cac26c72fa7a?q=80&w=1000&auto=format&fit=crop" alt="Electric dirtbike parked in a garage">
+      <span class="ref">Ref — your machine</span>
     </div><div class="pbody">
       <div class="prow-top"><h3>Your build, mini'd</h3><span class="price">$45</span></div>
       <p>Send photos of your bike — colorway, graphics, mods — and we print your exact machine.</p>
+      <div class="chips"><span class="chip">Any e-moto</span><span class="chip">Your colorway</span><span class="chip">Made to order</span></div>
       <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Request <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
   </div>
 </div></section>
 
-<section id="specs"><div class="wrap">
-  <span class="kicker">Specs</span>
-  <h2>Built like the real thing.</h2>
-  <p class="lead">Four stages between our print farm and your shelf.</p>
-  <div class="specs-grid">
-    <div class="spec"><div class="num">01 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-layers"/></svg></div><h3>Modeled in-house</h3><p>Every bike is drawn from real frame geometry. Wheelbase, rake, and stance verified against the full-size machine.</p></div>
-    <div class="spec"><div class="num">02 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-printer"/></svg></div><h3>Resin + FDM print</h3><p>Fine detail parts cure on resin printers; structural parts run on FDM. 40+ components per bike.</p></div>
-    <div class="spec"><div class="num">03 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-hand"/></svg></div><h3>Hand-finished</h3><p>Sanded, assembled, and detailed by hand. Wheels spin, bars turn, suspension compresses on deluxe builds.</p></div>
-    <div class="spec"><div class="num">04 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-box"/></svg></div><h3>Boxed to survive</h3><p>Foam-lined display box with model plaque. If it arrives broken, we reprint it. No questions.</p></div>
+<section id="craft"><div class="wrap craft-grid">
+  <div class="craft-photo rv">
+    <img loading="lazy" src="https://images.unsplash.com/photo-1638743995296-cac26c72fa7a?q=80&w=1100&auto=format&fit=crop" alt="Electric dirtbike in the workshop">
+    <span class="tag">FIG.02 — Reference / workshop</span>
+  </div>
+  <div>
+    <span class="kicker rv">Craft</span>
+    <h2 class="rv">Details you can<br>count with a <span class="outline">loupe.</span></h2>
+    <p class="lead rv" style="margin-bottom:0">We model from real frame geometry — wheelbase, rake and stance verified against the full-size machine before a single layer prints.</p>
+    <div class="spec-rows rv d1">
+      <div class="srow"><span class="sk">Layer height</span><span class="sv"><em>0.05mm</em> resin / 0.12mm FDM</span></div>
+      <div class="srow"><span class="sk">Components</span><span class="sv">38–47 printed parts per bike</span></div>
+      <div class="srow"><span class="sk">Moving bits</span><span class="sv">Wheels spin · bars turn · shocks compress*</span></div>
+      <div class="srow"><span class="sk">Finish</span><span class="sv">Hand-sanded, sealed, detailed</span></div>
+      <div class="srow"><span class="sk">In the box</span><span class="sv">Bike · stand · plaque · care card</span></div>
+    </div>
+    <p class="mono rv d2" style="font-size:.66rem;letter-spacing:.16em;color:var(--dim);margin-top:14px;text-transform:uppercase">*Deluxe builds</p>
   </div>
 </div></section>
 
-<section id="about"><div class="wrap about-grid">
-  <div>
-    <span class="kicker">About</span>
-    <h2>Built by riders.</h2>
+<section id="process"><div class="wrap">
+  <div class="sec-head">
+    <div class="rv"><span class="kicker">Process</span><h2>Print bed to <span class="outline">shelf.</span></h2></div>
+    <span class="mono-note rv d1">[ Avg. turnaround — 6 days ]</span>
   </div>
-  <div class="about-copy">
+  <p class="lead rv">Nothing sits in a warehouse. Every order starts as spools and resin.</p>
+  <div class="steps rv">
+    <div class="step"><div class="num">01</div><h3>Modeled in-house</h3><p>Every bike drawn from real frame geometry. If we haven't ridden it, we don't sell it.</p></div>
+    <div class="step"><div class="num">02</div><h3>Resin + FDM print</h3><p>Fine detail cures on resin printers; structural parts run on FDM. 6–9 hours per bike.</p></div>
+    <div class="step"><div class="num">03</div><h3>Hand-finished</h3><p>Sanded, assembled and detailed by hand. Every wheel spun, every bar turned before boxing.</p></div>
+    <div class="step"><div class="num">04</div><h3>Boxed to survive</h3><p>Foam-lined display box, model plaque, tracking number. Arrives broken? We reprint it. Free.</p></div>
+  </div>
+</div></section>
+
+<section id="gallery" style="padding-top:0"><div class="wrap">
+  <div class="gallery">
+    <div class="gshot rv"><img loading="lazy" src="https://images.unsplash.com/photo-1692317799954-473fbf5b3c7c?q=80&w=900&auto=format&fit=crop" alt="Electric dirtbike riding through forest"><span class="cap">Field ref — 001</span></div>
+    <div class="gshot rv d1"><img loading="lazy" src="https://images.unsplash.com/photo-1692317799580-d8d999dbe029?q=80&w=900&auto=format&fit=crop" alt="Electric dirtbike cornering on trail"><span class="cap">Field ref — 002</span></div>
+    <div class="gshot rv d2"><img loading="lazy" src="https://images.unsplash.com/photo-1692317800035-5c1ce8cdbf21?q=80&w=900&auto=format&fit=crop" alt="Electric dirtbike on wooded singletrack"><span class="cap">Field ref — 003</span></div>
+  </div>
+</div></section>
+
+<section id="about" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap about-grid">
+  <div class="rv"><span class="kicker">About</span><h2>Built by<br><span class="outline">riders.</span></h2></div>
+  <div class="about-copy rv d1">
     <p>MOTOMODZ started in a garage with <b>one Ultra Bee, one 3D printer and one obsession</b>: shrink the bikes we love down to something that looks unreal on a shelf.</p>
     <p>Every model is designed in-house, printed on resin and FDM machines, hand-finished, and shipped in a foam-lined display box. If it's on our site, <b>we've ridden the real one</b> — and we got the details right.</p>
     <div class="creds">
-      <div class="hstat"><div class="k">Founded</div><div class="v disp">2026</div></div>
-      <div class="hstat"><div class="k">Printers</div><div class="v disp">6</div></div>
-      <div class="hstat"><div class="k">Reply time</div><div class="v disp">&lt;24h</div></div>
+      <div class="hstat"><div class="k">Founded</div><div class="v">2026</div></div>
+      <div class="hstat"><div class="k">Printers</div><div class="v">6</div></div>
+      <div class="hstat"><div class="k">Reply time</div><div class="v">&lt;24h</div></div>
     </div>
   </div>
 </div></section>
 
 <section id="contact"><div class="wrap">
-  <span class="kicker">Get one</span>
-  <h2>Ready to <span class="blue">roll?</span></h2>
-  <p class="lead">Reserve a build, request a custom livery, or ask about a bike we don't list yet. We reply within 24 hours.</p>
-  <div class="cta-row">
+  <span class="kicker rv">Get one</span>
+  <h2 class="rv">Ready to <span class="blue">roll?</span></h2>
+  <p class="lead rv">Reserve a build, request a custom livery, or ask about a bike we don't list yet. We reply within 24 hours.</p>
+  <div class="cta-row rv d1">
     <a href="mailto:mibrahim2462@gmail.com" class="btn"><svg viewBox="0 0 28 28"><use href="#i-mail"/></svg>mibrahim2462@gmail.com</a>
     <a href="#" class="btn ghost" onclick="pop('Socials coming soon (mockup)');return false"><svg viewBox="0 0 28 28"><use href="#i-at"/></svg>@motomods</a>
   </div>
@@ -315,7 +347,7 @@
     <span class="mono">© 2026 MOTOMODZ</span>
     <span class="mono">Miniature replicas. Not toys. Not full size.</span>
   </div>
-  <p class="disclaimer">Mockup site — no real orders are processed. MOTOMODZ is an independent model shop and is not affiliated with, endorsed by, or sponsored by Sur-Ron, Stark Future, E Ride Pro, or any motorcycle manufacturer. Bike names identify the subject of each scale model.</p>
+  <p class="disclaimer">Mockup site — no real orders are processed. MOTOMODZ is an independent model shop and is not affiliated with, endorsed by, or sponsored by Sur-Ron, Stark Future, E Ride Pro, or any motorcycle manufacturer. Bike names identify the subject of each scale model. Photography: Unsplash contributors (Unsplash License); Stark VARG photo by Herodotptlomeu via Wikimedia Commons, CC BY-SA 4.0.</p>
 </div></footer>
 
 <div class="toast" id="toast">Pre-order noted (mockup)</div>
@@ -330,6 +362,12 @@
     t = setTimeout(()=>toast.classList.remove('show'), 2200);
   }
   document.querySelectorAll('.pre-btn').forEach(b=>b.addEventListener('click',()=>pop('Pre-order noted (mockup)')));
+
+  // scroll reveal
+  const io = new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+  }),{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
