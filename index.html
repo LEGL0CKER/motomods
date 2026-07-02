@@ -3,358 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MotoMods — 3-Inch 3D-Printed Mini Bikes</title>
+<title>MOTOMODZ — 3D Printed Mini E-Bikes &amp; Dirtbikes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#faf4ea; --bg2:#f3ead9; --card:#ffffff;
-    --ink:#241c13; --muted:#7a6f60;
-    --accent:#f26419; --accent-dk:#d54f0a; --accent-soft:#fde4d3;
-    --teal:#1f7a70; --line:#e8dcc8;
-    --radius:22px;
-    --shadow:0 10px 30px rgba(36,28,19,.08);
+    --bg:#080b12; --bg2:#0b0f18; --panel:#0e1420; --panel2:#121a29;
+    --line:#1c2536; --line2:#26324a;
+    --blue:#7ec8f8; --blue-dk:#4aa8e8; --blue-glow:rgba(126,200,248,.35);
+    --red:#e8452e; --ember:#c2401c;
+    --text:#e9eef5; --muted:#8b98ab; --dim:#5c6880;
+    --disp:'Bebas Neue',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+  body{
+    font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;
+    background-image:
+      radial-gradient(900px 500px at 85% -5%, rgba(74,168,232,.10), transparent 60%),
+      radial-gradient(800px 500px at 0% 110%, rgba(194,64,28,.14), transparent 60%),
+      linear-gradient(rgba(126,200,248,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(126,200,248,.035) 1px, transparent 1px);
+    background-size:auto,auto,52px 52px,52px 52px;
+  }
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
   svg{display:block}
+  ::selection{background:var(--blue);color:var(--bg)}
+
+  .disp{font-family:var(--disp);letter-spacing:.02em}
+  .mono{font-family:var(--mono)}
 
   /* ---------- Nav ---------- */
-  nav{position:sticky;top:0;z-index:50;background:rgba(250,244,234,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;letter-spacing:-.4px}
-  .logo .mark{width:38px;height:38px}
-  .logo b{color:var(--accent)}
-  .nav-links{display:flex;gap:26px;font-size:.95rem;color:var(--muted);font-weight:600}
-  .nav-links a:hover{color:var(--accent)}
-  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;padding:10px 22px;border-radius:999px;border:none;cursor:pointer;font-size:.95rem;transition:background .15s, transform .15s}
-  .btn:hover{background:var(--accent-dk);transform:translateY(-1px)}
-  .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
-  .btn.ghost:hover{background:var(--ink);color:var(--bg)}
-  .btn svg{width:18px;height:18px}
+  nav{position:sticky;top:0;z-index:50;background:rgba(8,11,18,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo .mark{width:36px;height:36px}
+  .logo span{font-family:var(--disp);font-size:1.5rem;letter-spacing:.12em}
+  .logo span b{color:var(--blue);font-weight:400}
+  .nav-links{display:flex;gap:30px;font-size:.92rem;color:var(--muted);font-weight:500}
+  .nav-links a{transition:color .15s}
+  .nav-links a:hover{color:var(--blue)}
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--blue);color:#06121f;font-weight:700;padding:11px 24px;border-radius:8px;border:none;cursor:pointer;font-size:.95rem;transition:.15s;font-family:'Inter',sans-serif}
+  .btn:hover{background:#a5d9ff;box-shadow:0 0 24px var(--blue-glow);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line2)}
+  .btn.ghost:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 18px rgba(126,200,248,.15)}
+  .btn svg{width:16px;height:16px}
 
   /* ---------- Hero ---------- */
-  header{padding:80px 0 70px;position:relative;overflow:hidden}
-  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
-  @media(max-width:860px){.hero{grid-template-columns:1fr}}
-  .pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--accent-dk);font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:999px;margin-bottom:20px}
-  .pill svg{width:15px;height:15px}
-  h1{font-size:clamp(2.4rem,5.5vw,3.7rem);font-weight:800;letter-spacing:-1.5px;line-height:1.06}
-  h1 span{color:var(--accent)}
-  .sub{color:var(--muted);font-size:1.12rem;max-width:520px;margin:20px 0 30px}
+  header{padding:88px 0 64px;overflow:hidden}
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}}
+  .badge{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line2);border-radius:999px;padding:7px 16px;font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;color:var(--blue);text-transform:uppercase;margin-bottom:26px;background:rgba(126,200,248,.05)}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.4}}
+  h1{font-family:var(--disp);font-weight:400;font-size:clamp(4rem,9vw,6.8rem);line-height:.92;letter-spacing:.015em;text-transform:uppercase}
+  h1 .outline{color:transparent;-webkit-text-stroke:2px var(--line2)}
+  h1 .blue{color:var(--blue);text-shadow:0 0 40px var(--blue-glow)}
+  .sub{color:var(--muted);font-size:1.08rem;max-width:520px;margin:26px 0 34px}
+  .sub b{color:var(--text);font-weight:600}
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-  .hero-stage{background:linear-gradient(160deg,#fff 0%,var(--bg2) 100%);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);padding:36px;text-align:center}
-  .hero-stage .stage-label{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:18px}
-  .stats{display:flex;gap:40px;margin-top:48px;flex-wrap:wrap}
-  .stat b{display:block;font-size:1.7rem;color:var(--accent);letter-spacing:-.5px}
-  .stat span{color:var(--muted);font-size:.88rem}
+  .hero-stats{display:flex;gap:0;margin-top:52px;border-top:1px solid var(--line);max-width:520px}
+  .hstat{flex:1;padding:18px 18px 0 0}
+  .hstat+.hstat{padding-left:18px;border-left:1px solid var(--line)}
+  .hstat .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+  .hstat .v{font-family:var(--disp);font-size:2rem;color:var(--blue);line-height:1.1;margin-top:2px}
+
+  /* Blueprint stage */
+  .blueprint{position:relative;border:1px dashed var(--line2);border-radius:12px;padding:44px 34px 30px;background:linear-gradient(180deg, rgba(18,26,41,.6), rgba(11,15,24,.9))}
+  .blueprint::before,.blueprint::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--blue);opacity:.6}
+  .blueprint::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
+  .blueprint::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
+  .bp-tag{position:absolute;top:14px;left:18px;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+  .bp-tag b{color:var(--blue);font-weight:600}
+  .bp-dim{display:flex;align-items:center;gap:10px;margin-top:22px;font-family:var(--mono);font-size:.7rem;color:var(--dim);letter-spacing:.12em}
+  .bp-dim .rule{flex:1;height:1px;background:var(--line2);position:relative}
+  .bp-dim .rule::before,.bp-dim .rule::after{content:"";position:absolute;top:-4px;width:1px;height:9px;background:var(--line2)}
+  .bp-dim .rule::before{left:0}.bp-dim .rule::after{right:0}
+
+  /* ---------- Ticker ---------- */
+  .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:13px 0;white-space:nowrap}
+  .ticker-track{display:inline-block;animation:scroll 28s linear infinite}
+  .ticker span{font-family:var(--mono);font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 34px}
+  .ticker span b{color:var(--blue);font-weight:400}
+  @keyframes scroll{to{transform:translateX(-50%)}}
 
   /* ---------- Sections ---------- */
-  section{padding:78px 0}
-  .kicker{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
-  h2{font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:800;letter-spacing:-.8px;margin:6px 0 10px}
-  .lead{color:var(--muted);max-width:620px;margin-bottom:42px}
+  section{padding:88px 0}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+  .kicker::before{content:"/ "}
+  h2{font-family:var(--disp);font-weight:400;font-size:clamp(2.6rem,5.5vw,4rem);line-height:.95;text-transform:uppercase;margin:12px 0 14px;letter-spacing:.02em}
+  .lead{color:var(--muted);max-width:600px;margin-bottom:48px}
 
-  /* ---------- Features ---------- */
-  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
-  .icon-chip{width:52px;height:52px;border-radius:16px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-  .icon-chip svg{width:28px;height:28px;stroke:var(--accent-dk)}
-  .card h3{font-size:1.15rem;margin-bottom:8px;letter-spacing:-.3px}
-  .card p{color:var(--muted);font-size:.95rem}
+  /* ---------- Lineup ---------- */
+  .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .product{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s,box-shadow .2s}
+  .product:hover{transform:translateY(-6px);border-color:var(--line2);box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 0 1px rgba(126,200,248,.12)}
+  .preorder{position:absolute;top:16px;left:16px;z-index:2;background:var(--red);color:#fff;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.16em;padding:5px 11px;border-radius:4px;text-transform:uppercase}
+  .thumb{padding:44px 26px 6px;display:flex;align-items:flex-end;justify-content:center;min-height:210px;background:
+    radial-gradient(240px 110px at 50% 108%, rgba(126,200,248,.13), transparent),
+    repeating-linear-gradient(0deg, transparent 0 25px, rgba(126,200,248,.03) 25px 26px)}
+  .thumb svg{width:84%;max-width:250px;height:auto;filter:drop-shadow(0 14px 22px rgba(0,0,0,.55))}
+  .product:hover .thumb svg{filter:drop-shadow(0 14px 22px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(126,200,248,.18))}
+  .pbody{padding:20px 24px 24px;display:flex;flex-direction:column;flex:1;border-top:1px solid var(--line)}
+  .prow-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .pbody h3{font-family:var(--disp);font-weight:400;font-size:1.65rem;letter-spacing:.04em;text-transform:uppercase}
+  .price{font-family:var(--disp);font-size:1.65rem;color:var(--blue)}
+  .pbody p{color:var(--muted);font-size:.92rem;margin-top:6px;flex:1}
+  .pfoot{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+  .scale{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+  .pre-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.16em;color:var(--text);text-transform:uppercase;transition:color .15s}
+  .pre-btn:hover{color:var(--blue)}
+  .pre-btn svg{width:14px;height:14px;transition:transform .15s}
+  .pre-btn:hover svg{transform:translateX(4px)}
 
-  /* ---------- Shop ---------- */
-  #shop{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:24px}
-  .product{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .2s}
-  .product:hover{transform:translateY(-5px)}
-  .thumb{padding:26px 20px 10px;display:flex;align-items:flex-end;justify-content:center;min-height:180px;background:
-    radial-gradient(220px 90px at 50% 105%, rgba(242,100,25,.12), transparent)}
-  .thumb svg{width:82%;max-width:230px;height:auto}
-  .pbody{padding:8px 24px 24px;display:flex;flex-direction:column;flex:1}
-  .ptag{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:800}
-  .pbody h3{margin:5px 0 5px;font-size:1.12rem;letter-spacing:-.3px}
-  .pbody p{color:var(--muted);font-size:.88rem;flex:1}
-  .prow{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
-  .price{font-size:1.3rem;font-weight:800;letter-spacing:-.5px}
-  .price small{color:var(--muted);font-weight:600;font-size:.72rem}
-  .buy{display:inline-flex;align-items:center;gap:7px;background:var(--ink);border:none;color:#fff;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;font-size:.85rem;transition:background .15s}
-  .buy:hover{background:var(--accent)}
-  .buy svg{width:15px;height:15px}
-  .scale-note{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin-top:10px;align-self:flex-start}
-  .scale-note svg{width:13px;height:13px;stroke:var(--muted)}
-
-  /* ---------- How it works ---------- */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;counter-reset:step}
-  .step{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
-  .step::before{counter-increment:step;content:counter(step,decimal-leading-zero);position:absolute;top:20px;right:24px;font-size:1.6rem;font-weight:800;color:var(--accent-soft)}
-  .step h3{font-size:1.05rem;margin:14px 0 6px}
-  .step p{color:var(--muted);font-size:.9rem}
-  .step .icon-chip{margin-bottom:0}
+  /* ---------- Specs ---------- */
+  #specs{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .spec{background:var(--panel);padding:30px}
+  .spec .num{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--dim)}
+  .spec .icon{width:44px;height:44px;margin:16px 0 14px;color:var(--blue)}
+  .spec .icon svg{width:100%;height:100%}
+  .spec h3{font-family:var(--disp);font-weight:400;font-size:1.4rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+  .spec p{color:var(--muted);font-size:.9rem}
 
   /* ---------- About ---------- */
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
   @media(max-width:820px){.about-grid{grid-template-columns:1fr}}
-  .about-art{background:var(--card);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);padding:40px;text-align:center}
-  .about-art svg{width:70%;margin:0 auto}
-  .about-art small{display:block;color:var(--muted);margin-top:16px;font-size:.85rem}
+  .about-copy p{color:var(--muted);margin-bottom:18px;font-size:1.02rem}
+  .about-copy p b{color:var(--text)}
+  .creds{display:flex;gap:0;margin-top:30px;border-top:1px solid var(--line)}
+  .creds .hstat .v{color:var(--text)}
 
-  /* ---------- Contact ---------- */
-  #contact .card{max-width:580px}
-  label{display:block;font-size:.85rem;font-weight:700;margin:16px 0 6px}
-  input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--ink);font:inherit}
-  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
-  .send{margin-top:22px;width:100%;justify-content:center}
+  /* ---------- CTA ---------- */
+  #contact{text-align:center;position:relative}
+  #contact h2{font-size:clamp(3.2rem,7vw,5.2rem)}
+  #contact h2 .blue{color:var(--blue);text-shadow:0 0 46px var(--blue-glow)}
+  #contact .lead{margin:0 auto 40px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
   /* ---------- Footer ---------- */
-  footer{padding:40px 0;color:var(--muted);font-size:.83rem}
-  .foot-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:center;border-top:1px solid var(--line);padding-top:28px}
-  .disclaimer{font-size:.75rem;color:var(--muted);max-width:720px;margin-top:14px}
+  footer{border-top:1px solid var(--line);padding:34px 0;background:var(--bg2)}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .foot-inner .mono{font-size:.72rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+  .disclaimer{font-size:.72rem;color:var(--dim);max-width:760px;margin-top:16px;line-height:1.7}
 
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--ink);color:#fff;font-weight:700;padding:13px 28px;border-radius:999px;transition:transform .3s;z-index:99;box-shadow:var(--shadow)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--blue);color:#06121f;font-weight:700;padding:13px 30px;border-radius:8px;transition:transform .3s;z-index:99;font-size:.9rem}
   .toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ====== SVG LIBRARY ====== -->
+<!-- ====== SVG DEFS ====== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <!-- Logo mark: mini bike on a display stand inside a badge -->
-    <g id="logo-mark">
-      <rect x="2" y="2" width="60" height="60" rx="16" fill="#f26419"/>
-      <g stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="19" cy="42" r="7"/>
-        <circle cx="45" cy="42" r="7"/>
-        <path d="M19 42 L27 28 L40 28 L45 42"/>
-        <path d="M27 28 L24 22 M40 28 L44 20 L48 20"/>
-        <path d="M27 28 L36 42"/>
-      </g>
-      <path d="M12 54 H52" stroke="#fff" stroke-width="3.2" stroke-linecap="round" opacity=".55"/>
+    <g id="bolt-mark">
+      <rect x="2" y="2" width="60" height="60" rx="12" fill="#7ec8f8"/>
+      <path d="M36 8 L18 36 h11 L27 56 L46 27 H34 Z" fill="#080b12"/>
     </g>
-    <!-- Mini e-moto silhouette (product art). Colors via CSS custom properties
-         so each <use> instance can be recolored (class selectors can't cross the use boundary). -->
+    <!-- Mini e-moto silhouette. Recolor per-instance with CSS custom properties. -->
     <g id="mini-bike">
-      <!-- stand -->
-      <rect x="40" y="128" width="150" height="8" rx="4" fill="var(--stand,#e8dcc8)"/>
-      <rect x="105" y="112" width="20" height="18" rx="3" fill="var(--stand,#e8dcc8)"/>
-      <!-- wheels -->
-      <circle cx="62" cy="98" r="26" fill="none" stroke="var(--tire,#241c13)" stroke-width="9"/>
-      <circle cx="168" cy="98" r="26" fill="none" stroke="var(--tire,#241c13)" stroke-width="9"/>
-      <circle cx="62" cy="98" r="9" fill="var(--hub,#7a6f60)"/>
-      <circle cx="168" cy="98" r="9" fill="var(--hub,#7a6f60)"/>
-      <!-- swingarm + frame -->
-      <path d="M62 98 L104 92 L96 64 L138 58 L150 74 L168 98" fill="none" stroke="var(--frame,#f26419)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M104 92 L134 92 L150 74" fill="none" stroke="var(--frame,#f26419)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- battery box -->
-      <rect x="100" y="62" width="42" height="26" rx="6" fill="var(--body,#241c13)"/>
-      <!-- seat -->
-      <path d="M92 58 L136 52 L138 44 L96 48 Z" fill="var(--seat,#1f7a70)"/>
-      <!-- forks + bars -->
-      <path d="M150 74 L162 50 M162 50 L152 44 M162 50 L172 46" fill="none" stroke="var(--frame,#f26419)" stroke-width="7" stroke-linecap="round"/>
-      <!-- fender -->
-      <path d="M150 66 Q170 58 184 74" fill="none" stroke="var(--seat,#1f7a70)" stroke-width="7" stroke-linecap="round"/>
+      <rect x="40" y="128" width="150" height="8" rx="4" fill="var(--stand,#1c2536)"/>
+      <rect x="105" y="112" width="20" height="18" rx="3" fill="var(--stand,#1c2536)"/>
+      <circle cx="62" cy="98" r="26" fill="none" stroke="var(--tire,#e9eef5)" stroke-width="9"/>
+      <circle cx="168" cy="98" r="26" fill="none" stroke="var(--tire,#e9eef5)" stroke-width="9"/>
+      <circle cx="62" cy="98" r="9" fill="var(--hub,#5c6880)"/>
+      <circle cx="168" cy="98" r="9" fill="var(--hub,#5c6880)"/>
+      <path d="M62 98 L104 92 L96 64 L138 58 L150 74 L168 98" fill="none" stroke="var(--frame,#7ec8f8)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M104 92 L134 92 L150 74" fill="none" stroke="var(--frame,#7ec8f8)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="100" y="62" width="42" height="26" rx="6" fill="var(--body,#e9eef5)"/>
+      <path d="M92 58 L136 52 L138 44 L96 48 Z" fill="var(--seat,#e9eef5)"/>
+      <path d="M150 74 L162 50 M162 50 L152 44 M162 50 L172 46" fill="none" stroke="var(--frame,#7ec8f8)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M150 66 Q170 58 184 74" fill="none" stroke="var(--seat,#e9eef5)" stroke-width="7" stroke-linecap="round"/>
     </g>
-    <!-- Icons: stroke=currentColor handled via CSS -->
+    <g id="i-arrow"><path d="M3 14h20M15 6l8 8-8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
     <g id="i-printer">
-      <path d="M7 3h14v6H7zM5 9h18a2 2 0 0 1 2 2v7h-4M5 9a2 2 0 0 0-2 2v7h4m0-4h14v9H7z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M11 21h6M11 24h4" stroke-width="2" stroke-linecap="round"/>
+      <path d="M7 3h14v6H7zM5 9h18a2 2 0 0 1 2 2v7h-4M5 9a2 2 0 0 0-2 2v7h4m0-4h14v9H7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11 21h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
     </g>
-    <g id="i-ruler">
-      <rect x="3" y="11" width="22" height="8" rx="2" fill="none" stroke-width="2"/>
-      <path d="M8 11v4M13 11v3M18 11v4M23 11v3" stroke-width="2" stroke-linecap="round"/>
-    </g>
-    <g id="i-layers">
-      <path d="M14 3 25 9 14 15 3 9zM3 14l11 6 11-6M3 19l11 6 11-6" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <g id="i-paint">
-      <path d="M15 4a10 10 0 1 0 0 20c1.8 0 2.6-1.2 2.2-2.6-.4-1.5.4-2.9 2-2.9h2.4A3.4 3.4 0 0 0 25 15C25 8.9 20.5 4 15 4z" fill="none" stroke-width="2" stroke-linejoin="round"/>
-      <circle cx="10" cy="10" r="1.6" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.6" fill="currentColor" stroke="none"/><circle cx="20" cy="11" r="1.6" fill="currentColor" stroke="none"/><circle cx="9" cy="16" r="1.6" fill="currentColor" stroke="none"/>
-    </g>
-    <g id="i-box">
-      <path d="M4 9 14 4l10 5v10l-10 5L4 19zM4 9l10 5 10-5M14 14v10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <g id="i-shield">
-      <path d="M14 3l9 4v7c0 6-4 9.5-9 11-5-1.5-9-5-9-11V7z" fill="none" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M10 13.5l3 3 5-6" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <g id="i-cart">
-      <circle cx="10" cy="23" r="2" fill="currentColor" stroke="none"/><circle cx="20" cy="23" r="2" fill="currentColor" stroke="none"/>
-      <path d="M3 4h4l3 13h11l3-9H8" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-    <g id="i-spark">
-      <path d="M15 2 7 16h6l-2 10 9-15h-6z" fill="none" stroke-width="2" stroke-linejoin="round"/>
-    </g>
-    <g id="i-send">
-      <path d="M25 3 12 16M25 3l-8 22-5-9-9-5z" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
+    <g id="i-layers"><path d="M14 3 25 9 14 15 3 9zM3 14l11 6 11-6M3 19l11 6 11-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-hand"><path d="M8 14V6.5a1.8 1.8 0 0 1 3.6 0V13m0-8a1.8 1.8 0 0 1 3.6 0v8m0-6.5a1.8 1.8 0 0 1 3.6 0V15m0-4a1.8 1.8 0 0 1 3.6 0v6c0 5-3.4 8-8 8-3.6 0-5.5-1.6-7.2-4.6L4.6 16c-.9-1.5.6-3.2 2.2-2.5L8 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-box"><path d="M4 9 14 4l10 5v10l-10 5L4 19zM4 9l10 5 10-5M14 14v10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-mail"><rect x="3" y="6" width="22" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m4 8 10 8 10-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-at"><circle cx="14" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 14v2a3 3 0 0 0 6 0v-2a11 11 0 1 0-4.5 8.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
   </defs>
 </svg>
 
 <nav><div class="wrap nav-inner">
-  <a href="#" class="logo"><svg class="mark" viewBox="0 0 64 64"><use href="#logo-mark"/></svg>Moto<b>Mods</b></a>
+  <a href="#" class="logo"><svg class="mark" viewBox="0 0 64 64"><use href="#bolt-mark"/></svg><span>MOTO<b>MODZ</b></span></a>
   <div class="nav-links">
-    <a href="#features">Why Minis</a>
-    <a href="#shop">Shop</a>
-    <a href="#how">How It Works</a>
+    <a href="#lineup">Lineup</a>
+    <a href="#specs">Specs</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="#shop" class="btn"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Shop Minis</a>
+  <a href="#lineup" class="btn">Shop bikes <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></a>
 </div></nav>
 
 <header><div class="wrap">
   <div class="hero">
     <div>
-      <span class="pill"><svg viewBox="0 0 28 28" stroke="currentColor" fill="none"><use href="#i-ruler"/></svg>3 inches of e-moto</span>
-      <h1>Your dream bike.<br><span>Desk-sized.</span></h1>
-      <p class="sub">3D-printed miniature replicas of the bikes you ride — Sur-Ron Ultra Bee, Light Bee, Talaria and more. Three inches long, printed layer by layer, finished by hand.</p>
+      <span class="badge"><span class="dot"></span>All releasing July 5th</span>
+      <h1>Mini bikes.<br><span class="outline">Full</span> <span class="blue">throttle.</span></h1>
+      <p class="sub">MOTOMODZ builds obsessively detailed <b>3D printed replicas</b> of the electric dirtbikes you actually shred — Ultra Bee, Stark Varg, E Ride Pro and more. <b>Desk-sized. Not full size. All attitude.</b></p>
       <div class="hero-ctas">
-        <a href="#shop" class="btn"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Browse the Lineup</a>
-        <a href="#how" class="btn ghost">How It Works</a>
+        <a href="#lineup" class="btn">See the lineup <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></a>
+        <a href="#specs" class="btn ghost">How they're made</a>
       </div>
-      <div class="stats">
-        <div class="stat"><b>3"</b><span>palm-sized scale</span></div>
-        <div class="stat"><b>0.08mm</b><span>layer resolution</span></div>
-        <div class="stat"><b>12+</b><span>color combos</span></div>
-        <div class="stat"><b>48h</b><span>print-to-ship</span></div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="k">Scale</div><div class="v disp">1:8</div></div>
+        <div class="hstat"><div class="k">Parts</div><div class="v disp">40+</div></div>
+        <div class="hstat"><div class="k">Hand-finish</div><div class="v disp">100%</div></div>
       </div>
     </div>
-    <div class="hero-stage">
-      <svg viewBox="0 0 230 145" style="--frame:#f26419;--seat:#1f7a70">
-        <use href="#mini-bike"/>
-      </svg>
-      <div class="stage-label">Ultra Bee Mini — shown actual style, not actual size</div>
+    <div class="blueprint">
+      <div class="bp-tag">FIG.01 — <b>ULTRA BEE / 1:8</b></div>
+      <svg viewBox="0 0 230 145" style="--frame:#7ec8f8;--seat:#e9eef5;--body:#e9eef5;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
+      <div class="bp-dim"><span>0mm</span><span class="rule"></span><span>238mm</span></div>
     </div>
   </div>
 </div></header>
 
-<section id="features"><div class="wrap">
-  <span class="kicker"><svg width="15" height="15" viewBox="0 0 28 28" stroke="currentColor" fill="none"><use href="#i-spark"/></svg>Why MotoMods Minis</span>
-  <h2>Big bike energy. Tiny footprint.</h2>
-  <p class="lead">Every mini is modeled from the real geometry of the full-size bike, then printed and finished one at a time.</p>
-  <div class="grid3">
-    <div class="card"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-printer"/></svg></div><h3>Printed, Not Molded</h3><p>Each mini is 3D-printed at 0.08mm layers — crisp spokes, real suspension detail, no injection-mold seams.</p></div>
-    <div class="card"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-ruler"/></svg></div><h3>True-to-Scale</h3><p>Modeled from real frame geometry at roughly 1:24 scale. Wheelbase, rake, and stance match the bike in your garage.</p></div>
-    <div class="card"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-paint"/></svg></div><h3>Your Colorway</h3><p>Pick frame, rim, and seat colors to match your actual build. Custom number plates available on request.</p></div>
-    <div class="card"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-layers"/></svg></div><h3>Articulated Details</h3><p>Bars that turn, wheels that spin. Deluxe editions add working suspension linkage in printed titanium-tone PLA.</p></div>
-    <div class="card"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-box"/></svg></div><h3>Display Ready</h3><p>Every mini ships on a printed display stand with a laser-etched model plaque. Desk, shelf, or dash — it belongs there.</p></div>
-    <div class="card"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-shield"/></svg></div><h3>Break It? We Reprint It</h3><p>Snapped a lever off your mini? Send a photo and we'll print replacement parts for the cost of shipping.</p></div>
-  </div>
-</div></section>
+<div class="ticker"><div class="ticker-track">
+  <span>1:8 scale <b>//</b></span><span>40+ printed parts <b>//</b></span><span>Hand-finished <b>//</b></span><span>Resin + FDM <b>//</b></span><span>Foam-lined box <b>//</b></span><span>Designed in-house <b>//</b></span><span>Releasing 07.05 <b>//</b></span>
+  <span>1:8 scale <b>//</b></span><span>40+ printed parts <b>//</b></span><span>Hand-finished <b>//</b></span><span>Resin + FDM <b>//</b></span><span>Foam-lined box <b>//</b></span><span>Designed in-house <b>//</b></span><span>Releasing 07.05 <b>//</b></span>
+</div></div>
 
-<section id="shop"><div class="wrap">
-  <span class="kicker"><svg width="15" height="15" viewBox="0 0 28 28" stroke="currentColor" fill="none"><use href="#i-cart"/></svg>The Lineup</span>
-  <h2>Pick your mini.</h2>
-  <p class="lead">All models about 3 inches long, printed to order. Prices are mockup placeholders.</p>
+<section id="lineup"><div class="wrap">
+  <span class="kicker">Lineup</span>
+  <h2>Pick your poison.</h2>
+  <p class="lead">Every model printed to order, hand-finished, and shipped in a foam-lined display box. First come, first served.</p>
   <div class="products">
 
-    <div class="product"><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#f26419;--seat:#241c13"><use href="#mini-bike"/></svg>
+    <div class="product"><span class="preorder">Pre-order</span><div class="thumb">
+      <svg viewBox="0 0 230 145" style="--frame:#7ec8f8;--seat:#e9eef5;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
     </div><div class="pbody">
-      <span class="ptag">Best Seller</span><h3>Ultra Bee Mini</h3>
-      <p>The Sur-Ron Ultra Bee at 3 inches. Spinning wheels, turning bars, printed display stand included.</p>
-      <span class="scale-note"><svg viewBox="0 0 28 28" fill="none"><use href="#i-ruler"/></svg>~1:24 scale · 3.1" long</span>
-      <div class="prow"><span class="price">$34 <small>USD</small></span><button class="buy"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Add</button></div>
+      <div class="prow-top"><h3>Sur-Ron Ultra Bee</h3><span class="price">$25</span></div>
+      <p>The all-terrain sting. Full swingarm detail, spinning wheels, factory-blue frame.</p>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
-    <div class="product"><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#1f7a70;--seat:#241c13"><use href="#mini-bike"/></svg>
+    <div class="product"><span class="preorder">Pre-order</span><div class="thumb">
+      <svg viewBox="0 0 230 145" style="--frame:#e9eef5;--seat:#7ec8f8;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
     </div><div class="pbody">
-      <span class="ptag">Classic</span><h3>Light Bee X Mini</h3>
-      <p>The bike that started it all. Sur-Ron Light Bee X with detailed swingarm and rear shock.</p>
-      <span class="scale-note"><svg viewBox="0 0 28 28" fill="none"><use href="#i-ruler"/></svg>~1:24 scale · 2.9" long</span>
-      <div class="prow"><span class="price">$29 <small>USD</small></span><button class="buy"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Add</button></div>
+      <div class="prow-top"><h3>Stark Varg</h3><span class="price">$30</span></div>
+      <p>80hp of desk presence. Sculpted bodywork, motocross stance, arctic-white frame.</p>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
-    <div class="product"><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#c02c2c;--seat:#241c13"><use href="#mini-bike"/></svg>
+    <div class="product"><span class="preorder">Pre-order</span><div class="thumb">
+      <svg viewBox="0 0 230 145" style="--frame:#e8452e;--seat:#e9eef5;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
     </div><div class="pbody">
-      <span class="ptag">New</span><h3>Talaria Sting Mini</h3>
-      <p>Talaria's trail weapon, shrunk to shelf size. Gearbox housing and frame braces faithfully modeled.</p>
-      <span class="scale-note"><svg viewBox="0 0 28 28" fill="none"><use href="#i-ruler"/></svg>~1:24 scale · 3.0" long</span>
-      <div class="prow"><span class="price">$32 <small>USD</small></span><button class="buy"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Add</button></div>
+      <div class="prow-top"><h3>E Ride Pro SS</h3><span class="price">$20</span></div>
+      <p>Street-legal in miniature. Ember-red frame, detailed forks, turn-key stance.</p>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Pre-order <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
-    <div class="product"><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#4a4a4a;--hub:#f26419;--body:#f26419;--seat:#241c13"><use href="#mini-bike"/></svg>
+    <div class="product"><span class="preorder" style="background:var(--blue);color:#06121f">Custom</span><div class="thumb">
+      <svg viewBox="0 0 230 145" style="--frame:#f2a71b;--seat:#7ec8f8;--body:#0e1420;--tire:#dfe7f2"><use href="#mini-bike"/></svg>
     </div><div class="pbody">
-      <span class="ptag">Limited</span><h3>E Ride Pro SR Mini</h3>
-      <p>Small batch run with metallic-fleck filament. Numbered plaque on the stand, 100 units per drop.</p>
-      <span class="scale-note"><svg viewBox="0 0 28 28" fill="none"><use href="#i-ruler"/></svg>~1:24 scale · 3.0" long</span>
-      <div class="prow"><span class="price">$39 <small>USD</small></span><button class="buy"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Add</button></div>
-    </div></div>
-
-    <div class="product"><div class="thumb">
-      <svg viewBox="0 0 230 145" style="--frame:#f2a71b;--body:#1f7a70;--seat:#241c13"><use href="#mini-bike"/></svg>
-    </div><div class="pbody">
-      <span class="ptag">Custom</span><h3>Your Bike, Mini'd</h3>
-      <p>Send photos of your build — colorway, graphics kit, upgrades — and we model your exact bike at 3 inches.</p>
-      <span class="scale-note"><svg viewBox="0 0 28 28" fill="none"><use href="#i-ruler"/></svg>Any e-moto · made to order</span>
-      <div class="prow"><span class="price">$59 <small>USD</small></span><button class="buy"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Add</button></div>
-    </div></div>
-
-    <div class="product"><div class="thumb" style="align-items:center">
-      <svg viewBox="0 0 230 145"><g fill="none" stroke="#241c13" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M55 45 115 20l60 25v55l-60 25-60-25z"/><path d="M55 45l60 25 60-25M115 70v55"/></g><path d="M88 32l58 24" stroke="#f26419" stroke-width="7" stroke-linecap="round"/></svg>
-    </div><div class="pbody">
-      <span class="ptag">Add-On</span><h3>Collector 3-Pack</h3>
-      <p>Ultra Bee, Light Bee X, and Sting minis in a printed presentation box. The whole garage, one shelf.</p>
-      <span class="scale-note"><svg viewBox="0 0 28 28" fill="none"><use href="#i-ruler"/></svg>3 minis + display shelf</span>
-      <div class="prow"><span class="price">$85 <small>USD</small></span><button class="buy"><svg viewBox="0 0 28 28" stroke="currentColor"><use href="#i-cart"/></svg>Add</button></div>
+      <div class="prow-top"><h3>Your build, mini'd</h3><span class="price">$45</span></div>
+      <p>Send photos of your bike — colorway, graphics, mods — and we print your exact machine.</p>
+      <div class="pfoot"><span class="scale">1:8 scale</span><button class="pre-btn">Request <svg viewBox="0 0 28 28"><use href="#i-arrow"/></svg></button></div>
     </div></div>
 
   </div>
 </div></section>
 
-<section id="how"><div class="wrap">
-  <span class="kicker"><svg width="15" height="15" viewBox="0 0 28 28" stroke="currentColor" fill="none"><use href="#i-printer"/></svg>How It Works</span>
-  <h2>From print bed to your desk.</h2>
-  <p class="lead">Every order is printed fresh — nothing sits in a warehouse.</p>
-  <div class="steps">
-    <div class="step"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-cart"/></svg></div><h3>Pick &amp; Customize</h3><p>Choose your model and colorway, or send photos for a custom replica of your own bike.</p></div>
-    <div class="step"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-printer"/></svg></div><h3>We Print It</h3><p>Your mini prints at 0.08mm layers over 6–9 hours, then gets hand-assembled and detailed.</p></div>
-    <div class="step"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-shield"/></svg></div><h3>Quality Check</h3><p>Wheels spin, bars turn, stand fits. Anything off and it goes back on the print bed.</p></div>
-    <div class="step"><div class="icon-chip"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor"><use href="#i-box"/></svg></div><h3>Ships in 48h</h3><p>Packed in a printed presentation box with a model plaque and care card. Tracking included.</p></div>
+<section id="specs"><div class="wrap">
+  <span class="kicker">Specs</span>
+  <h2>Built like the real thing.</h2>
+  <p class="lead">Four stages between our print farm and your shelf.</p>
+  <div class="specs-grid">
+    <div class="spec"><div class="num">01 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-layers"/></svg></div><h3>Modeled in-house</h3><p>Every bike is drawn from real frame geometry. Wheelbase, rake, and stance verified against the full-size machine.</p></div>
+    <div class="spec"><div class="num">02 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-printer"/></svg></div><h3>Resin + FDM print</h3><p>Fine detail parts cure on resin printers; structural parts run on FDM. 40+ components per bike.</p></div>
+    <div class="spec"><div class="num">03 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-hand"/></svg></div><h3>Hand-finished</h3><p>Sanded, assembled, and detailed by hand. Wheels spin, bars turn, suspension compresses on deluxe builds.</p></div>
+    <div class="spec"><div class="num">04 /</div><div class="icon"><svg viewBox="0 0 28 28"><use href="#i-box"/></svg></div><h3>Boxed to survive</h3><p>Foam-lined display box with model plaque. If it arrives broken, we reprint it. No questions.</p></div>
   </div>
 </div></section>
 
-<section id="about" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap about-grid">
+<section id="about"><div class="wrap about-grid">
   <div>
-    <span class="kicker"><svg width="15" height="15" viewBox="0 0 28 28" stroke="currentColor" fill="none"><use href="#i-spark"/></svg>About</span>
-    <h2>Made by a rider, for riders.</h2>
-    <p class="lead" style="margin-bottom:14px">MotoMods started when our founder couldn't find a decent model of his Ultra Bee anywhere — so he spent a month modeling one and printed it on his desk.</p>
-    <p style="color:var(--muted)">Now it's a one-man print farm shipping minis to riders everywhere. Every model is drawn from scratch, every print is checked by the same hands that ride the real thing on weekends.</p>
+    <span class="kicker">About</span>
+    <h2>Built by riders.</h2>
   </div>
-  <div class="about-art">
-    <svg viewBox="0 0 230 145" style="--frame:#f26419;--seat:#1f7a70"><use href="#mini-bike"/></svg>
-    <small>Modeled from real geometry — printed at ~1:24 scale</small>
+  <div class="about-copy">
+    <p>MOTOMODZ started in a garage with <b>one Ultra Bee, one 3D printer and one obsession</b>: shrink the bikes we love down to something that looks unreal on a shelf.</p>
+    <p>Every model is designed in-house, printed on resin and FDM machines, hand-finished, and shipped in a foam-lined display box. If it's on our site, <b>we've ridden the real one</b> — and we got the details right.</p>
+    <div class="creds">
+      <div class="hstat"><div class="k">Founded</div><div class="v disp">2026</div></div>
+      <div class="hstat"><div class="k">Printers</div><div class="v disp">6</div></div>
+      <div class="hstat"><div class="k">Reply time</div><div class="v disp">&lt;24h</div></div>
+    </div>
   </div>
 </div></section>
 
 <section id="contact"><div class="wrap">
-  <span class="kicker"><svg width="15" height="15" viewBox="0 0 28 28" stroke="currentColor" fill="none"><use href="#i-send"/></svg>Contact</span>
-  <h2>Want your bike mini'd?</h2>
-  <p class="lead">Tell us what you ride. Photos help.</p>
-  <div class="card">
-    <form id="quote-form">
-      <label for="name">Name</label><input id="name" type="text" placeholder="Jesse Rider">
-      <label for="email">Email</label><input id="email" type="email" placeholder="you@example.com">
-      <label for="msg">Your bike &amp; colorway</label><textarea id="msg" rows="4" placeholder="2024 Ultra Bee, gloss black frame, orange rims, custom number plate 27..."></textarea>
-      <button class="btn send" type="submit"><svg viewBox="0 0 28 28" stroke="currentColor" fill="none"><use href="#i-send"/></svg>Request My Mini</button>
-    </form>
+  <span class="kicker">Get one</span>
+  <h2>Ready to <span class="blue">roll?</span></h2>
+  <p class="lead">Reserve a build, request a custom livery, or ask about a bike we don't list yet. We reply within 24 hours.</p>
+  <div class="cta-row">
+    <a href="mailto:mibrahim2462@gmail.com" class="btn"><svg viewBox="0 0 28 28"><use href="#i-mail"/></svg>mibrahim2462@gmail.com</a>
+    <a href="#" class="btn ghost" onclick="pop('Socials coming soon (mockup)');return false"><svg viewBox="0 0 28 28"><use href="#i-at"/></svg>@motomods</a>
   </div>
 </div></section>
 
 <footer><div class="wrap">
   <div class="foot-inner">
-    <a href="#" class="logo" style="font-size:1.05rem"><svg class="mark" style="width:30px;height:30px" viewBox="0 0 64 64"><use href="#logo-mark"/></svg>Moto<b>Mods</b></a>
-    <span>© 2026 MotoMods Minis · hello@motomods.example</span>
+    <span class="mono">© 2026 MOTOMODZ</span>
+    <span class="mono">Miniature replicas. Not toys. Not full size.</span>
   </div>
-  <p class="disclaimer">Mockup site — no real orders are processed. MotoMods is a fan-made model shop and is not affiliated with, endorsed by, or sponsored by Sur-Ron, Talaria, E Ride Pro, or any bike manufacturer. Bike names are used to identify the subject of each scale model.</p>
+  <p class="disclaimer">Mockup site — no real orders are processed. MOTOMODZ is an independent model shop and is not affiliated with, endorsed by, or sponsored by Sur-Ron, Stark Future, E Ride Pro, or any motorcycle manufacturer. Bike names identify the subject of each scale model.</p>
 </div></footer>
 
-<div class="toast" id="toast">Added to cart (mockup)</div>
+<div class="toast" id="toast">Pre-order noted (mockup)</div>
 
 <script>
   const toast = document.getElementById('toast');
@@ -365,12 +329,7 @@
     clearTimeout(t);
     t = setTimeout(()=>toast.classList.remove('show'), 2200);
   }
-  document.querySelectorAll('.buy').forEach(b=>b.addEventListener('click',()=>pop('Added to cart (mockup)')));
-  document.getElementById('quote-form').addEventListener('submit',e=>{
-    e.preventDefault();
-    pop('Request sent (mockup)');
-    e.target.reset();
-  });
+  document.querySelectorAll('.pre-btn').forEach(b=>b.addEventListener('click',()=>pop('Pre-order noted (mockup)')));
 </script>
 </body>
 </html>

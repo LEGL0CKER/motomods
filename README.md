@@ -1,6 +1,6 @@
-# MotoMods Minis
+# MOTOMODZ
 
-Mockup website for MotoMods — 3-inch 3D-printed miniature replicas of e-moto bikes (Sur-Ron Ultra Bee, Light Bee X, Talaria Sting, and more).
+Mockup website for MOTOMODZ — 1:8-scale 3D-printed miniature replicas of electric dirtbikes (Sur-Ron Ultra Bee, Stark Varg, E Ride Pro SS, and custom builds).
 
 Static single-page site (landing + mock shop). No real checkout. All product art is inline SVG — no emojis, no image files.
 
